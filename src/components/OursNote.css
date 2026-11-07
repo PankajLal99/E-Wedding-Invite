@@ -1,0 +1,26 @@
+.ours-note {
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+  background:
+    linear-gradient(180deg, transparent, var(--surface-tint), transparent);
+}
+
+.ours-note__inner {
+  max-width: 28rem;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.ours-note__line {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-lead);
+  color: var(--color-heading);
+  line-height: 1.65;
+  margin-bottom: 0.55rem;
+}
+
+.ours-note__sign {
+  margin-top: 1.15rem;
+  font-family: var(--font-script);
+  font-size: var(--fs-script);
+  color: var(--color-gold);
+}

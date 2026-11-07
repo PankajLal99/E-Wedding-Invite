@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220">
+  <defs>
+    <linearGradient id="petalBack" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#e9a6b4"/>
+      <stop offset="100%" stop-color="#c85d78"/>
+    </linearGradient>
+    <linearGradient id="petalMid" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#fbe3e8"/>
+      <stop offset="100%" stop-color="#df7f97"/>
+    </linearGradient>
+    <linearGradient id="petalFront" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#fff4f6"/>
+      <stop offset="100%" stop-color="#e88aa1"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0c6b70"/>
+      <stop offset="100%" stop-color="#3e8a6e"/>
+    </linearGradient>
+  </defs>
+  <path d="M20 182 Q90 150 160 176 Q90 206 20 182 Z" fill="url(#leaf)" opacity="0.85"/>
+  <path d="M300 182 Q230 150 160 176 Q230 206 300 182 Z" fill="url(#leaf)" opacity="0.85"/>
+  <path d="M26 182 Q92 172 156 177" stroke="#cfe3d6" stroke-width="0.8" fill="none" opacity="0.6"/>
+  <path d="M294 182 Q228 172 164 177" stroke="#cfe3d6" stroke-width="0.8" fill="none" opacity="0.6"/>
+  <path d="M160 170 Q108.9 132.6 57.3 148.2 Q98.1 183.4 160 170 Z" fill="url(#petalBack)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L57.3 148.2" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q221.9 183.4 262.7 148.2 Q211.1 132.6 160 170 Z" fill="url(#petalBack)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L262.7 148.2" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q123.0 108.8 62.2 104.0 Q89.4 158.6 160 170 Z" fill="url(#petalMid)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L62.2 104.0" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q230.6 158.6 257.8 104.0 Q197.0 108.8 160 170 Z" fill="url(#petalMid)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L257.8 104.0" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q151.4 91.1 94.0 55.7 Q96.0 123.1 160 170 Z" fill="url(#petalMid)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L94.0 55.7" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q224.0 123.1 226.0 55.7 Q168.6 91.1 160 170 Z" fill="url(#petalMid)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L226.0 55.7" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q173.3 88.4 130.9 33.1 Q114.6 100.9 160 170 Z" fill="url(#petalFront)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L130.9 33.1" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q205.4 100.9 189.1 33.1 Q146.7 88.4 160 170 Z" fill="url(#petalFront)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L189.1 33.1" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/><path d="M160 170 Q192.0 87.5 160.0 20.0 Q128.0 87.5 160 170 Z" fill="url(#petalFront)" stroke="#a97a2e" stroke-width="1.2" opacity="1.0"/><path d="M160 170 L160.0 20.0" stroke="#a97a2e" stroke-width="0.6" opacity="0.45"/>
+  <path d="M40 204 Q100 196 160 204 T280 204" stroke="#a97a2e" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M70 214 Q115 208 160 214 T250 214" stroke="#a97a2e" stroke-width="0.8" fill="none" opacity="0.35"/>
+</svg>

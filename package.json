@@ -1,0 +1,27 @@
+{
+  "name": "wedding-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:bride": "vite --mode bride --port 5174",
+    "dev:rsvp": "npm run dev --prefix ../services/rsvp-api",
+    "build": "tsc -b && npm run build:groom && npm run build:bride",
+    "build:groom": "vite build --outDir dist/groom --emptyOutDir",
+    "build:bride": "vite build --mode bride --outDir dist/bride --emptyOutDir",
+    "preview": "vite preview --outDir dist/groom",
+    "preview:bride": "vite preview --mode bride --outDir dist/bride --port 4174"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.3"
+  }
+}

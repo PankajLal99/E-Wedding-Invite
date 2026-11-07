@@ -1,0 +1,369 @@
+/* ============ Living decorations: peacock feather, lotus, drifting petals ============ */
+
+.decor {
+  pointer-events: none;
+}
+
+.decor svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Only the painted shapes react to touch, never the empty box around them */
+.decor svg path,
+.decor svg ellipse,
+.decor svg polyline {
+  pointer-events: visiblePainted;
+}
+
+.decor .lotus__ripple,
+.decor .lotus__glow {
+  pointer-events: none;
+}
+
+/* Off-screen decorations rest */
+.decor:not([data-active]) * {
+  animation-play-state: paused !important;
+}
+
+/* ---------------- Peacock feather ---------------- */
+
+.decor--feather .decor__kick {
+  transform-origin: 50% 100%;
+  transform:
+    translateY(calc(var(--view-pos, 0) * -18px))
+    rotate(calc(var(--scroll-vel, 0) * -8deg));
+  will-change: transform;
+}
+
+.feather__sway,
+.feather__flutter {
+  transform-box: view-box;
+  transform-origin: 120px 590px;
+}
+
+.feather__sway {
+  animation: featherSway 7.5s ease-in-out infinite;
+}
+
+.decor--feather[data-flutter] .feather__flutter {
+  animation: featherFlutter 1.6s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.feather__barbs {
+  fill: none;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  animation: barbShimmer 5.5s ease-in-out infinite;
+}
+
+.feather__fringe {
+  fill: none;
+  stroke: #7fa24a;
+  stroke-width: 1;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.feather__shaft {
+  fill: none;
+  stroke: #a97a2e;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.feather__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: eyePulse 6s ease-in-out infinite;
+}
+
+@keyframes featherSway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes featherFlutter {
+  0% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(-8deg);
+  }
+  35% {
+    transform: rotate(5.5deg);
+  }
+  55% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(1.5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes barbShimmer {
+  0%,
+  100% {
+    opacity: 0.62;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes eyePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+/* ---------------- Lotus ---------------- */
+
+.decor--lotus .decor__kick {
+  transform-origin: 50% 90%;
+  transform: rotate(calc(var(--scroll-vel, 0) * 3deg));
+}
+
+.lotus__float {
+  animation: lotusFloat 6.5s ease-in-out infinite;
+}
+
+.lotus__ripple {
+  fill: none;
+  stroke: #a97a2e;
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lotusRipple 7.8s ease-out infinite;
+}
+
+.lotus__ripple--burst {
+  stroke: #0f7c80;
+  stroke-width: 1.4;
+  animation: lotusRipple 1.6s ease-out 1 both;
+}
+
+.lotus__leaf {
+  transform-box: fill-box;
+  animation: leafRock 8s ease-in-out infinite;
+}
+
+.lotus__leaf--l {
+  --rock: -1.6deg;
+  transform-origin: 100% 50%;
+}
+
+.lotus__leaf--r {
+  --rock: 1.6deg;
+  transform-origin: 0% 50%;
+  animation-delay: -4s;
+}
+
+.lotus__glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glowPulse 5s ease-in-out infinite;
+}
+
+.lotus__petal,
+.lotus__petal-scroll,
+.lotus__petal-breathe {
+  transform-box: view-box;
+  transform-origin: 160px 172px;
+}
+
+/* Bud until first seen, then opens */
+.lotus__petal {
+  transform: rotate(calc(var(--dir) * -16deg)) scale(0.78);
+  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i) * 60ms);
+}
+
+.decor--lotus[data-open] .lotus__petal {
+  transform: none;
+}
+
+.decor--lotus[data-bloom] .lotus__petal {
+  transform: rotate(calc(var(--dir) * 9deg)) scale(1.05);
+  transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: calc(var(--i) * 25ms);
+}
+
+/* Opens a little wider as it reaches the middle of the screen */
+.lotus__petal-scroll {
+  transform: rotate(
+    calc(var(--dir) * (1 - max(var(--view-pos, 1), calc(var(--view-pos, 1) * -1))) * 5deg)
+  );
+}
+
+.lotus__petal-breathe {
+  animation: petalBreathe 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.45s);
+}
+
+@keyframes lotusFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes lotusRipple {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@keyframes leafRock {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(var(--rock));
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes petalBreathe {
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+  50% {
+    transform: rotate(calc(var(--dir) * 2.5deg)) scale(1.015);
+  }
+}
+
+/* ---------------- Drifting petals ---------------- */
+
+.drift {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.drift__petal {
+  position: absolute;
+  top: 0;
+  width: var(--size);
+  opacity: 0;
+  animation: driftFall var(--dur) linear var(--delay) infinite;
+}
+
+.drift__sway {
+  display: block;
+  animation: driftSway calc(var(--dur) / 4) ease-in-out var(--delay) infinite alternate;
+}
+
+.drift__shape {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.drift__shape--a path:first-child {
+  fill: #eba3b5;
+}
+
+.drift__shape--b path:first-child {
+  fill: #f6cfd8;
+}
+
+.drift__vein {
+  fill: none;
+  stroke: #c85d78;
+  stroke-width: 0.8;
+  opacity: 0.5;
+}
+
+@keyframes driftFall {
+  0% {
+    transform: translateY(-8vh);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.55;
+  }
+  90% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(108vh);
+    opacity: 0;
+  }
+}
+
+@keyframes driftSway {
+  from {
+    transform: translateX(calc(var(--sway) * -1)) rotate(-25deg);
+  }
+  to {
+    transform: translateX(var(--sway)) rotate(35deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .drift__petal:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift {
+    display: none;
+  }
+
+  .decor *,
+  .decor__kick {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .decor__kick,
+  .decor .lotus__petal,
+  .decor .lotus__petal-scroll {
+    transform: none !important;
+  }
+}

@@ -1,0 +1,114 @@
+.rsvp {
+  min-height: 100dvh;
+  padding: clamp(1.25rem, 4vw, 2.5rem) var(--space-gutter) 3rem;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(169, 122, 46, 0.12), transparent 55%),
+    linear-gradient(180deg, rgba(248, 240, 226, 0.92), rgba(241, 229, 207, 0.96));
+}
+
+.rsvp--off {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  min-height: 100dvh;
+  text-align: center;
+}
+
+.rsvp__top {
+  max-width: 34rem;
+  margin: 0 auto 1.35rem;
+  text-align: center;
+}
+
+.rsvp__blessing {
+  font-family: var(--font-hindi);
+  color: var(--color-gold);
+  margin-bottom: 0.35rem;
+}
+
+.rsvp__top h1 {
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  color: var(--color-heading);
+}
+
+.rsvp__sub {
+  color: var(--color-muted);
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.rsvp__hello {
+  margin-top: 0.85rem;
+  font-family: var(--font-hindi);
+  color: var(--color-heading);
+}
+
+.rsvp__back {
+  display: inline-block;
+  margin-top: 0.85rem;
+  color: var(--color-heading);
+  font-size: 0.95rem;
+}
+
+.rsvp__card {
+  max-width: 34rem;
+  margin-inline: auto;
+  border: 1px solid var(--color-line);
+  background: var(--surface-card);
+  padding: clamp(1.2rem, 3vw, 1.6rem);
+  display: grid;
+  gap: 1rem;
+}
+
+.rsvp__card--ok {
+  text-align: center;
+  gap: 1.1rem;
+}
+
+.rsvp__card label,
+.rsvp__card legend {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--color-gold);
+  font-size: 0.95rem;
+}
+
+.rsvp__card input,
+.rsvp__card textarea {
+  width: 100%;
+  border: 1px solid var(--color-line);
+  background: var(--surface-input);
+  color: var(--color-ink);
+  padding: 0.75rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+}
+
+.rsvp__card input {
+  min-height: 3rem;
+}
+
+.rsvp__card fieldset {
+  border: 1px solid var(--color-line);
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.rsvp__radio {
+  display: flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-ink) !important;
+  font-size: 1rem !important;
+}
+
+.rsvp__radio input {
+  width: auto;
+  min-height: 0;
+}
+
+.rsvp__error {
+  color: #b3263f;
+  margin: 0;
+}
