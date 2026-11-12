@@ -50,11 +50,10 @@ const resortDays = [
     venueKey: 'resort',
     city: 'Bhopal',
     events: [
-      { nameHi: 'हल्दी', name: 'Haldi', time: '12:00 PM onwards' },
+      { name: 'Haldi', time: '12:00 PM' },
       {
-        nameHi: 'रिंग सेरेमनी एवं रिसेप्शन',
         name: 'Ring Ceremony & Reception',
-        time: '9:00 PM onwards',
+        time: '9:00 PM',
       },
     ],
   },
@@ -65,9 +64,9 @@ const resortDays = [
     venueKey: 'resort',
     city: 'Bhopal',
     events: [
-      { nameHi: 'बारात', name: 'Barat', time: '11:00 AM onwards' },
-      { nameHi: 'भोजन', name: 'Lunch', time: '2:00 PM onwards' },
-      { nameHi: 'शुभ लग्न', name: 'Shubh Lagn', time: '2:00 PM onwards' },
+      { name: 'Barat', time: '11:00 AM' },
+      { name: 'Lunch', time: '2:00 PM' },
+      { name: 'Shubh Lagn', time: '2:00 PM' },
     ],
   },
 ]
@@ -79,7 +78,7 @@ const resortCalendar = [
     start: '20270122T120000',
     end: '20270122T235900',
     location: resortAddress,
-    description: 'Haldi 12:00 PM onwards · Ring Ceremony & Reception 9:00 PM onwards',
+    description: 'Haldi 12:00 PM · Ring Ceremony & Reception 9:00 PM',
   },
   {
     day: 23,
@@ -87,7 +86,7 @@ const resortCalendar = [
     start: '20270123T110000',
     end: '20270123T200000',
     location: resortAddress,
-    description: 'Barat 11:00 AM onwards · Lunch 2:00 PM onwards · Shubh Lagn 2:00 PM onwards',
+    description: 'Barat 11:00 AM · Lunch 2:00 PM · Shubh Lagn 2:00 PM',
   },
 ]
 
@@ -130,8 +129,6 @@ const sharedFaq = {
 }
 
 export const weddingConfig = {
-  blessing: '॥ श्री गणेशाय नमः ॥',
-
   date: {
     full: 'Saturday, 23 January 2027',
     weddingDay: '23 January',
@@ -155,11 +152,11 @@ export const weddingConfig = {
     line: 'Made with love for our families',
   },
 
-  /** Pure Hindi note */
+  /** A short note from the couple */
   ours: {
     lines: [
-      'यह कोई सामान्य कार्ड नहीं — हमने इसे आपके लिए ही रखा है।',
-      'आपके आने से हमारी खुशियाँ पूरी होंगी।',
+      'This is no ordinary card — we made it just for you.',
+      'Your presence will complete our happiness.',
     ],
   },
 
@@ -203,9 +200,8 @@ export const weddingConfig = {
           city: 'Bhopal',
           events: [
             {
-              nameHi: 'बैराना साहब',
               name: 'Bairana Sahab',
-              time: '10:00 AM onwards',
+              time: '10:00 AM',
               note: 'Followed by lunch',
             },
           ],
@@ -219,7 +215,7 @@ export const weddingConfig = {
           start: '20270121T100000',
           end: '20270121T150000',
           location: 'A 53 D, BDA Colony, Teela Jamalpura, Bhopal 462001',
-          description: 'Bairana Sahab 10:00 AM onwards, followed by lunch',
+          description: 'Bairana Sahab 10:00 AM, followed by lunch',
         },
         ...resortCalendar,
       ],
@@ -307,8 +303,8 @@ export const weddingConfig = {
           venueKey: 'brideResidence',
           city: 'Narmadapuram',
           events: [
-            { nameHi: 'मेहंदी', name: 'Mehndi', time: '2:00 PM onwards' },
-            { nameHi: 'माता की चौकी', name: 'Mata Chowki', time: '7:00 PM onwards' },
+            { name: 'Mehndi', time: '2:00 PM' },
+            { name: 'Mata Chowki', time: '7:00 PM' },
           ],
         },
         ...resortDays,
@@ -320,7 +316,7 @@ export const weddingConfig = {
           start: '20270120T140000',
           end: '20270120T230000',
           location: 'H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001',
-          description: 'Mehndi 2:00 PM onwards · Mata Chowki 7:00 PM onwards',
+          description: 'Mehndi 2:00 PM · Mata Chowki 7:00 PM',
         },
         {
           day: 22,

@@ -41,7 +41,7 @@ export default function Countdown() {
   ]
 
   return (
-    <section className="countdown">
+    <section className="countdown patch">
       <div className="container">
         <p className="countdown__label">{weddingConfig.date.foreverLabel}</p>
         <p className="countdown__forever">

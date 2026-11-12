@@ -11,7 +11,6 @@ export type SiteVenue = {
 }
 
 export type SiteEvent = {
-  nameHi: string
   name: string
   time: string
   note?: string
@@ -77,19 +76,17 @@ export function getSiteContent(family: HostFamily) {
   const side = hostFamilies[family]
   const details = weddingConfig.sides[family]
   const pair = `${side.first} & ${side.second}`
-  const pairHi = `${side.firstHi} व ${side.secondHi}`
 
   return {
     family,
     side,
-    names: { first: side.first, second: side.second, pair, pairHi },
+    names: { first: side.first, second: side.second, pair },
     hashtag: side.hashtag,
     monogram: side.monogram,
-    blessing: weddingConfig.blessing,
     date: { ...weddingConfig.date, short: details.dateShort, range: details.dateRange },
     hero: weddingConfig.hero,
     story: weddingConfig.story,
-    ours: { lines: weddingConfig.ours.lines, signOff: `— ${pairHi}` },
+    ours: { lines: weddingConfig.ours.lines, signOff: `— ${pair}` },
     secret: { ...weddingConfig.secret, signOff: `— ${pair}` },
     inviteFrom: side.inviteFrom,
     venues: weddingConfig.venues as Record<string, SiteVenue>,

@@ -6,30 +6,62 @@
   padding: 0;
 }
 
+/* ============================================================
+   Two themes, one codebase  (set via <html data-side="…">)
+   groom → deep burgundy, ivory text, gold + blush lotus
+   bride → warm cream, burgundy text, ivory jaali pattern
+   Palette from Muskan: #4A181B · #F3E5CE · #FAF3E6
+   ============================================================ */
 :root {
-  /* Beige · peacock · lotus */
-  --color-bg: #f4ead8;
-  --color-bg-deep: #ebdcc1;
-  --color-peacock: #0b4f5c;
-  --color-peacock-bright: #0f7c80;
-  --color-peacock-blue: #1b3f86;
-  --color-lotus: #c85d78;
-  --color-lotus-soft: #f6d6de;
-  --color-gold: #a97a2e;
-  --color-gold-deep: #7d5a1e;
-  --color-heading: #0b4f5c;
-  --color-ink: #3a2e24;
-  --color-muted: rgba(58, 46, 36, 0.72);
-  --color-faint: rgba(58, 46, 36, 0.45);
-  --color-line: rgba(169, 122, 46, 0.35);
-  --color-on-accent: #fffaf0;
+  --burgundy: #4a181b;
+  --burgundy-deep: #34100f;
+  --cream: #f3e5ce;
+  --ivory: #faf3e6;
+  --gold-light: #dcc08a;
+  --lotus-pink: #d98cae;
 
-  --surface-tint: rgba(255, 250, 240, 0.5);
-  --surface-card: rgba(255, 251, 244, 0.94);
-  --surface-input: rgba(255, 255, 255, 0.8);
-  --surface-nav: rgba(248, 240, 226, 0.94);
-  --overlay: rgba(11, 40, 46, 0.55);
-  --shadow-card: 0 10px 30px rgba(11, 79, 92, 0.08);
+  color-scheme: light;
+
+  /* Bride theme is the default (light base) */
+  --color-bg: #f3e5ce;
+  --color-bg-deep: #ecd9b8;
+  --color-peacock: #4a181b;
+  --color-peacock-bright: #6a2429;
+  --color-peacock-blue: #4a181b;
+  --color-lotus: #b04f7c;
+  --color-lotus-soft: #f1d3de;
+  --color-gold: #7f5d22;
+  --color-gold-deep: #6f5220;
+  --color-heading: #4a181b;
+  --color-ink: #4a181b;
+  --color-muted: rgba(74, 24, 27, 0.78);
+  --color-faint: rgba(74, 24, 27, 0.5);
+  --color-line: rgba(148, 112, 47, 0.4);
+  --color-on-accent: #faf3e6;
+
+  --surface-tint: rgba(250, 243, 230, 0.55);
+  --surface-card: rgba(250, 243, 230, 0.9);
+  --surface-card-grad: linear-gradient(180deg, rgba(250, 243, 230, 0.96), rgba(243, 229, 206, 0.8));
+  --surface-input: rgba(255, 252, 245, 0.85);
+  --surface-nav: rgba(243, 229, 206, 0.94);
+  --overlay: rgba(52, 16, 15, 0.6);
+  --shadow-card: 0 10px 30px rgba(74, 24, 27, 0.1);
+  --btn-ghost-bg: rgba(250, 243, 230, 0.7);
+  --btn-hover-tint: rgba(74, 24, 27, 0.08);
+
+  --texture-pattern: url('/brand/jaali-ivory.svg');
+  --texture-opacity: 0.5;
+  --page-wash:
+    radial-gradient(ellipse at 0% 0%, rgba(250, 243, 230, 0.7), transparent 45%),
+    radial-gradient(ellipse at 100% 100%, rgba(74, 24, 27, 0.07), transparent 55%),
+    linear-gradient(180deg, #f6ebd6, #f0e0c6);
+  --hero-glow: radial-gradient(ellipse at 50% 30%, rgba(250, 243, 230, 0.75), transparent 60%);
+  --logo-shadow: drop-shadow(0 10px 22px rgba(74, 24, 27, 0.28));
+
+  /* Burgundy "patch" used on a few bands of the light theme */
+  --patch-bg:
+    url('/brand/jaali-gold-soft.svg') center / 120px,
+    radial-gradient(ellipse at 50% 0%, #5e2024, #4a181b 60%, #34100f);
 
   /* Type scale — every component uses these roles */
   --fs-label: clamp(0.8rem, 0.76rem + 0.2vw, 0.86rem);
@@ -45,7 +77,6 @@
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-script: 'Great Vibes', cursive;
   --font-body: 'Outfit', system-ui, sans-serif;
-  --font-hindi: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', serif;
 
   --space-section: clamp(3.75rem, 9vw, 7.5rem);
   --space-gutter: clamp(1.25rem, 4vw, 3rem);
@@ -53,6 +84,63 @@
   --container-wide: min(1400px, 100% - 2 * var(--space-gutter));
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+/* ---------------- Groom: burgundy base, light text ---------------- */
+[data-side='groom'] {
+  color-scheme: dark;
+  --color-bg: #4a181b;
+  --color-bg-deep: #3a1214;
+  --color-peacock: #dcc08a;
+  --color-peacock-bright: #ecd5a3;
+  --color-peacock-blue: #dcc08a;
+  --color-lotus: #e19ab9;
+  --color-lotus-soft: #6a2a3a;
+  --color-gold: #dcc08a;
+  --color-gold-deep: #c4a468;
+  --color-heading: #f3e5ce;
+  --color-ink: #faf3e6;
+  --color-muted: rgba(250, 243, 230, 0.8);
+  --color-faint: rgba(250, 243, 230, 0.5);
+  --color-line: rgba(220, 192, 138, 0.35);
+  --color-on-accent: #34100f;
+
+  --surface-tint: rgba(34, 8, 9, 0.28);
+  --surface-card: rgba(58, 18, 20, 0.82);
+  --surface-card-grad: linear-gradient(180deg, rgba(66, 22, 25, 0.9), rgba(52, 16, 18, 0.8));
+  --surface-input: rgba(250, 243, 230, 0.08);
+  --surface-nav: rgba(52, 16, 18, 0.94);
+  --overlay: rgba(20, 4, 5, 0.7);
+  --shadow-card: 0 12px 34px rgba(0, 0, 0, 0.3);
+  --btn-ghost-bg: rgba(250, 243, 230, 0.06);
+  --btn-hover-tint: rgba(220, 192, 138, 0.16);
+
+  --texture-pattern: url('/brand/jaali-gold.svg');
+  --texture-opacity: 0.09;
+  --page-wash:
+    radial-gradient(ellipse at 50% 0%, rgba(120, 44, 52, 0.55), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(20, 4, 5, 0.5), transparent 55%),
+    linear-gradient(180deg, #521b1f, #431418);
+  --hero-glow: radial-gradient(ellipse at 50% 35%, rgba(150, 62, 70, 0.4), transparent 62%);
+  --logo-shadow: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.45));
+
+  /* Regal serif + signature script (Saffron / Atherline from the font bundle) */
+  --font-display: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Pinyon Script', cursive;
+  --fs-title: clamp(2rem, 1.6rem + 2vw, 2.9rem);
+  --fs-title-sm: clamp(1.2rem, 1.08rem + 0.6vw, 1.45rem);
+  --fs-number: clamp(2rem, 1.6rem + 1.6vw, 2.7rem);
+  --fs-display: clamp(3.6rem, 2.6rem + 6vw, 6.4rem);
+  --heading-tracking: 0.05em;
+}
+
+/* ---------------- Bride: cream base, burgundy text ---------------- */
+[data-side='bride'] {
+  /* Timeless serif + romantic script (Valentia / Adeline) */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Allura', cursive;
+  --heading-tracking: 0.01em;
+}
+
 
 html {
   scroll-behavior: smooth;
@@ -65,10 +153,7 @@ body {
   font-weight: 300;
   color: var(--color-ink);
   background-color: var(--color-bg);
-  background-image:
-    radial-gradient(ellipse at 0% 0%, rgba(246, 214, 222, 0.55), transparent 45%),
-    radial-gradient(ellipse at 100% 100%, rgba(15, 124, 128, 0.12), transparent 50%),
-    linear-gradient(180deg, #f8f0e2, #f1e5cf);
+  background-image: var(--page-wash);
   background-attachment: fixed;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -92,7 +177,33 @@ button {
   color: inherit;
 }
 
+/* Jaali pattern + paper grain over the whole page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    var(--texture-pattern),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .15 0 0 0 0 .1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  background-size: 120px 120px, 160px 160px;
+  opacity: var(--texture-opacity);
+}
+
+main,
+footer,
+.navbar {
+  position: relative;
+  z-index: 1;
+}
+
+.navbar {
+  position: fixed;
+}
+
 h1, h2, h3, h4 {
+  letter-spacing: var(--heading-tracking, 0);
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 1.15;
@@ -216,22 +327,35 @@ footer > .container {
 }
 
 .btn-ghost {
-  background: rgba(255, 251, 244, 0.6);
-  color: var(--color-peacock);
+  background: var(--btn-ghost-bg);
+  color: var(--color-heading);
 }
 
 .btn-ghost:hover {
-  background: rgba(169, 122, 46, 0.12);
+  background: var(--btn-hover-tint);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--color-peacock);
+  color: var(--color-heading);
   border-color: var(--color-gold);
 }
 
 .btn-outline:hover {
-  background: rgba(169, 122, 46, 0.14);
+  background: var(--btn-hover-tint);
+}
+
+/* Burgundy patch band (bride theme): light text on burgundy */
+[data-side='bride'] .patch {
+  --color-heading: #f3e5ce;
+  --color-ink: #faf3e6;
+  --color-muted: rgba(250, 243, 230, 0.8);
+  --color-faint: rgba(250, 243, 230, 0.5);
+  --color-gold: #dcc08a;
+  --color-line: rgba(220, 192, 138, 0.4);
+  --color-lotus: #e19ab9;
+  background: var(--patch-bg);
+  color: var(--color-ink);
 }
 
 @keyframes fadeInUp {

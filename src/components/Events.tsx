@@ -96,9 +96,6 @@ export default function Events() {
                   {day.events.map((event) => (
                     <li key={event.name} className="day-event">
                       <div className="day-event__names">
-                        <span className="day-event__hi" lang="hi">
-                          {event.nameHi}
-                        </span>
                         <span className="day-event__en">{event.name}</span>
                         {event.note && (
                           <span className="day-event__note">{event.note}</span>

@@ -22,8 +22,6 @@ export type HostFamilyConfig = {
   /** Names in the order this side shows them */
   first: string
   second: string
-  firstHi: string
-  secondHi: string
   /** Monogram letters, in display order */
   monogram: [string, string]
   hashtag: string
@@ -37,8 +35,6 @@ export const hostFamilies: Record<HostFamily, HostFamilyConfig> = {
     inviteFrom: 'Pankaj & Family',
     first: 'Pankaj',
     second: 'Muskan',
-    firstHi: 'पंकज',
-    secondHi: 'मुस्कान',
     monogram: ['P', 'M'],
     hashtag: '#PankajWedsMuskan',
     favicon: '/favicon-groom.svg',
@@ -49,8 +45,6 @@ export const hostFamilies: Record<HostFamily, HostFamilyConfig> = {
     inviteFrom: 'Muskan & Family',
     first: 'Muskan',
     second: 'Pankaj',
-    firstHi: 'मुस्कान',
-    secondHi: 'पंकज',
     monogram: ['M', 'P'],
     hashtag: '#MuskanWedsPankaj',
     favicon: '/favicon-bride.svg',

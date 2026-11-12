@@ -11,6 +11,7 @@ import './index.css'
 const path = window.location.pathname.replace(/\/+$/, '') || '/'
 
 const side = hostFamilyConfig()
+document.documentElement.dataset.side = side.id
 const pair = `${side.first} & ${side.second}`
 document.title = `${pair} — Wedding`
 document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.setAttribute('href', side.favicon)

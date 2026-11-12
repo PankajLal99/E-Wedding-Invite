@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { features, rsvpUrl } from '../config/features'
-import { weddingConfig } from '../config/wedding'
 import './Admin.css'
 
 type RsvpRow = {
@@ -180,9 +179,6 @@ export default function AdminRsvp() {
     return (
       <div className="admin admin--gate">
         <form className="admin__gate" onSubmit={onUnlock}>
-          <p className="admin__blessing" lang="hi">
-            {weddingConfig.blessing}
-          </p>
           <h1>RSVP inbox</h1>
           <p className="admin__gate-sub">Dev / family only</p>
           <label>
@@ -215,9 +211,6 @@ export default function AdminRsvp() {
     <div className="admin">
       <header className="admin__top">
         <div>
-          <p className="admin__blessing" lang="hi">
-            {weddingConfig.blessing}
-          </p>
           <h1>RSVP inbox</h1>
           <p className="admin__top-sub">
             {rows.length} replies · {heads} attending guests (yes)

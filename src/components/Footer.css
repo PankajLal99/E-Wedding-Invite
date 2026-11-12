@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
   background: var(--color-bg-deep);
+  border-top-color: var(--color-line);
   text-align: center;
   padding: clamp(3.5rem, 8vw, 5.5rem) 0 clamp(2rem, 4vw, 2.75rem);
   border-top: 1px solid var(--color-line);
@@ -13,19 +14,18 @@
 }
 
 .footer__blessing {
-  font-family: var(--font-hindi);
+  font-family: var(--font-display);
   color: var(--color-gold);
   margin-bottom: 1rem;
   letter-spacing: 0.06em;
 }
 
 .footer__logo {
-  width: clamp(4.5rem, 10vw, 6rem);
+  width: clamp(8rem, 20vw, 11rem);
   height: auto;
-  aspect-ratio: 240 / 300;
   margin: 0 auto 1.25rem;
   display: block;
-  filter: drop-shadow(0 8px 20px rgba(11, 79, 92, 0.15));
+  filter: var(--logo-shadow);
 }
 
 .footer__invite {

@@ -7,7 +7,7 @@ import { SecretModal, useKonamiSecret } from './SecretModal'
 import './Hero.css'
 
 export default function Hero() {
-  const { hero, blessing, names, date } = useSite()
+  const { hero, names, date } = useSite()
   const { open, setOpen } = useKonamiSecret()
   const pressTimer = useRef<number | null>(null)
 
@@ -23,9 +23,6 @@ export default function Hero() {
       <FloralCorners />
 
       <div className="hero__content">
-        <p className="hero__blessing fade-in" lang="hi">
-          {blessing}
-        </p>
 
         <GuestWelcome />
 
@@ -44,7 +41,6 @@ export default function Hero() {
 
         <p
           className="hero__tagline fade-in"
-          lang={hero.tagline.match(/[\u0900-\u097F]/) ? 'hi' : undefined}
         >
           {hero.tagline}
         </p>
@@ -57,7 +53,6 @@ export default function Hero() {
 
         <p
           className="hero__closing fade-in"
-          lang={hero.closing.match(/[\u0900-\u097F]/) ? 'hi' : undefined}
         >
           {hero.closing}
         </p>

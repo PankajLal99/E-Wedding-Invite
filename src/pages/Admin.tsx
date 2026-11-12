@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { features } from '../config/features'
 import { currentSiteUrl } from '../config/sides'
-import { weddingConfig } from '../config/wedding'
 import { useHostFamily } from '../hooks/useHostFamily'
 import { useSite } from '../hooks/useSite'
 import {
@@ -47,7 +46,7 @@ type HistoryItem = {
 type BatchGuest = ParsedContact & {
   id: string
   days: InviteDaySet
-  /** सपरिवार when true · अकेले when false/missing */
+  /** With family when true · alone when false/missing */
   saparivar?: boolean
   sent?: boolean
 }
@@ -120,7 +119,7 @@ export default function Admin() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [days, setDays] = useState<InviteDaySet>('all')
-  /** Default अकेले · already-sent links stay सपरिवार via token s:true */
+  /** Default alone · already-sent links stay with family via token s:true */
   const [saparivar, setSaparivar] = useState(false)
   const [batch, setBatch] = useState<BatchGuest[]>([])
   const [history, setHistory] = useState<HistoryItem[]>([])
@@ -433,7 +432,7 @@ export default function Admin() {
   }
 
   const familyPicker = (
-    <div className="admin__mode admin__mode--family" lang="hi">
+    <div className="admin__mode admin__mode--family">
       <button
         type="button"
         className={`admin__mode-btn ${!saparivar ? 'is-on' : ''}`}
@@ -444,7 +443,7 @@ export default function Admin() {
           }
         }}
       >
-        अकेले
+        Alone
       </button>
       <button
         type="button"
@@ -456,7 +455,7 @@ export default function Admin() {
           }
         }}
       >
-        सपरिवार
+        With family
       </button>
     </div>
   )
@@ -486,9 +485,6 @@ export default function Admin() {
     return (
       <div className="admin admin--gate">
         <form className="admin__gate" onSubmit={unlock}>
-          <p className="admin__blessing" lang="hi">
-            {weddingConfig.blessing}
-          </p>
           <h1>Send Invites</h1>
           <p className="admin__gate-sub">Family only</p>
           <label>
@@ -522,9 +518,6 @@ export default function Admin() {
     <div className="admin">
       <header className="admin__top">
         <div>
-          <p className="admin__blessing" lang="hi">
-            {weddingConfig.blessing}
-          </p>
           <h1>Send Invites</h1>
           <p className="admin__top-sub">
             {family.label} · From {family.inviteFrom}
@@ -865,12 +858,12 @@ export default function Admin() {
               <p className="admin__step">3 · Send</p>
               <div className="admin__preview">
                 <span>Preview</span>
-                <strong lang="hi">
+                <strong>
                   {mode === 'group'
-                    ? 'प्रिय परिवार व मित्रों,'
-                    : `आदरणीय ${preview},`}
+                    ? 'Dear family & friends,'
+                    : `Dear ${preview},`}
                 </strong>
-                <em lang="hi">{inviteRequestLine(payload)}।</em>
+                <em>{inviteRequestLine(payload)}.</em>
                 <em>{formatDaysSummary(days)}</em>
               </div>
               <a
@@ -947,9 +940,9 @@ export default function Admin() {
               {history.map((h) => (
                 <li key={h.id}>
                   <div>
-                    <strong lang={isGroupInvite(h.payload) ? 'hi' : undefined}>
+                    <strong>
                       {isGroupInvite(h.payload)
-                        ? 'Group · परिवार व मित्रों'
+                        ? 'Group · family & friends'
                         : formatGuestLine(h.payload)}
                     </strong>
                     <span>

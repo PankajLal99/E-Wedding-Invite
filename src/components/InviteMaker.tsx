@@ -60,7 +60,7 @@ export default function InviteMaker() {
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(url)
-      alert('निजी निमंत्रण लिंक कॉपी हो गया · Personal invite link copied')
+      alert('Personal invite link copied')
     } catch {
       prompt('Copy link:', url)
     }
@@ -72,15 +72,15 @@ export default function InviteMaker() {
         <div className="section-ornament">
           <span>✦</span>
         </div>
-        <p className="section-kicker">केवल परिवार के लिए · Host tools</p>
-        <h2 className="section-title">निमंत्रण बनाएँ</h2>
+        <p className="section-kicker">Host tools</p>
+        <h2 className="section-title">Create invitation</h2>
         <p className="section-subtitle">
           Create personal links — guest names stay hidden in the URL
         </p>
 
         <div className="invite-maker__card">
           <label>
-            Saved guest / सहेजा हुआ अतिथि
+            Saved guest
             <select
               value={preset}
               onChange={(e) => {
@@ -93,7 +93,7 @@ export default function InviteMaker() {
                 }
               }}
             >
-              <option value="">Custom / नया नाम</option>
+              <option value="">Custom</option>
               {Object.entries(inviteBook).map(([code, g]) => (
                 <option key={code} value={code}>
                   {g.name} ({code})
@@ -103,7 +103,7 @@ export default function InviteMaker() {
           </label>
 
           <label>
-            Guest name / अतिथि का नाम
+            Guest name
             <input
               value={name}
               onChange={(e) => {
@@ -115,7 +115,7 @@ export default function InviteMaker() {
           </label>
 
           <fieldset className="invite-maker__family">
-            <legend>निमंत्रण प्रकार · Invite type</legend>
+            <legend>Invite type</legend>
             <label className="invite-maker__radio">
               <input
                 type="radio"
@@ -126,7 +126,7 @@ export default function InviteMaker() {
                   setSaparivar(true)
                 }}
               />
-              सपरिवार · With family
+              With family
             </label>
             <label className="invite-maker__radio">
               <input
@@ -138,13 +138,13 @@ export default function InviteMaker() {
                   setSaparivar(false)
                 }}
               />
-              केवल व्यक्तिगत · Without family
+              Without family
             </label>
           </fieldset>
 
           {saparivar && (
             <label>
-              Elders / बड़ों के नाम (comma separated)
+              Elders (comma separated)
               <input
                 value={elders}
                 onChange={(e) => {
@@ -156,8 +156,8 @@ export default function InviteMaker() {
             </label>
           )}
 
-          <div className="invite-maker__preview" lang="hi">
-            <span>पूर्वावलोकन · Preview</span>
+          <div className="invite-maker__preview">
+            <span>Preview</span>
             <strong>{preview}</strong>
           </div>
 
@@ -165,10 +165,10 @@ export default function InviteMaker() {
 
           <div className="invite-maker__actions">
             <button type="button" className="btn btn-primary" onClick={() => void copy()}>
-              लिंक कॉपी करें
+              Copy link
             </button>
             <a className="btn btn-ghost" href={wa} target="_blank" rel="noopener noreferrer">
-              WhatsApp से भेजें
+              Send on WhatsApp
             </a>
           </div>
         </div>

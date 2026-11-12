@@ -39,7 +39,7 @@ export function useGuestDisplay() {
   if (!invite) return null
   return {
     invite,
-    lineHi: formatGuestLine(invite),
+    line: formatGuestLine(invite),
     lineEn: formatGuestLineEn(invite),
   }
 }

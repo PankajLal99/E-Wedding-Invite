@@ -1,5 +1,4 @@
 import Lotus from './decor/Lotus'
-import PeacockFeather from './decor/PeacockFeather'
 import './decor/decor.css'
 
 export default function FloralCorners({
@@ -11,7 +10,6 @@ export default function FloralCorners({
 
   return (
     <>
-      <PeacockFeather className={`${cls} floral-corner--feather floral-corner--tr`} />
       <Lotus className={`${cls} floral-corner--lotus floral-corner--bl`} />
     </>
   )

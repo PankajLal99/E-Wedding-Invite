@@ -8,7 +8,7 @@ export default function OursNote() {
 
   return (
     <section className="ours-note" ref={ref} aria-label="A note from us">
-      <div className="container ours-note__inner reveal" lang="hi">
+      <div className="container ours-note__inner reveal">
         {ours.lines.map((line) => (
           <p key={line} className="ours-note__line">
             {line}

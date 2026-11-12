@@ -1,5 +1,4 @@
 import { FormEvent, useMemo, useState } from 'react'
-import { weddingConfig } from '../config/wedding'
 import { features, rsvpUrl } from '../config/features'
 import { useGuestInvite } from '../hooks/useGuestInvite'
 import { useSite } from '../hooks/useSite'
@@ -67,16 +66,13 @@ export default function Rsvp() {
   return (
     <div className="rsvp">
       <header className="rsvp__top">
-        <p className="rsvp__blessing" lang="hi">
-          {weddingConfig.blessing}
-        </p>
         <h1>RSVP</h1>
         <p className="rsvp__sub">
           {site.names.pair} · {site.date.range}
         </p>
         {greeting && (
-          <p className="rsvp__hello" lang="hi">
-            आदरणीय {greeting}
+          <p className="rsvp__hello">
+            Dear {greeting}
           </p>
         )}
         <a className="rsvp__back" href="/">

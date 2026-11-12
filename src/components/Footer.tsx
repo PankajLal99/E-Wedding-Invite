@@ -4,15 +4,12 @@ import Monogram from './Monogram'
 import './Footer.css'
 
 export default function Footer() {
-  const { blessing, names, date, footer, credit, hashtag } = useSite()
+  const { names, date, footer, credit, hashtag } = useSite()
 
   return (
-    <footer className="footer">
+    <footer className="footer patch">
       <FloralCorners />
       <div className="container">
-        <p className="footer__blessing" lang="hi">
-          {blessing}
-        </p>
         <Monogram className="footer__logo" />
         <p className="footer__invite">JOIN US IN CELEBRATING</p>
         <p className="footer__names">{names.pair}</p>

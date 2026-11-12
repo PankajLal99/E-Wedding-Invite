@@ -6,11 +6,11 @@ import type { HostFamily } from '../config/sides'
 export type InviteDaySet = 'all' | '22-23' | '23'
 
 export type InvitePayload = {
-  /** Guest / contact name · for groups use “समस्त” */
+  /** Guest / contact name · groups use “__group__” */
   n: string
-  /** Invite with family — uses “आप सपरिवार सादर आमंत्रित हैं” */
+  /** Invite with family — warm “with family” wording */
   s: boolean
-  /** Elders named on the invite (optional), e.g. श्री …, श्रीमती … */
+  /** Elders named on the invite (optional), e.g. Mr …, Mrs … */
   e?: string[]
   /** Days invited — all (groom 21–23, bride 20 + 22–23 January) · 22–23 · 23 only */
   d?: InviteDaySet
@@ -20,7 +20,7 @@ export type InvitePayload = {
 
 export function isGroupInvite(invite: InvitePayload | null | undefined): boolean {
   if (!invite) return false
-  return Boolean(invite.g) || invite.n === 'समस्त' || invite.n === '__group__'
+  return Boolean(invite.g) || invite.n === '\u0938\u092e\u0938\u094d\u0924' || invite.n === '__group__'
 }
 
 export const inviteDayOptions: Array<{
@@ -77,10 +77,10 @@ export function normalizeDaySet(value: unknown): InviteDaySet {
 }
 
 export function makeGroupInvite(days: InviteDaySet = 'all'): InvitePayload {
-  return { n: 'समस्त', s: true, d: normalizeDaySet(days), g: true }
+  return { n: '__group__', s: true, d: normalizeDaySet(days), g: true }
 }
 
-/** True only when the token explicitly marks सपरिवार. Missing → अकेले. */
+/** True only when the token explicitly marks with-family. Missing → without family. */
 export function isSaparivar(invite?: InvitePayload | null): boolean {
   return Boolean(invite?.s)
 }
@@ -106,30 +106,18 @@ export function filterCalendarEvents(d?: InviteDaySet, family?: HostFamily) {
   return site.calendarEvents.filter((event) => allowed.has(event.day))
 }
 
-/** Ensure a respectful जी once — never "Name जी जी" */
-export function withJi(name: string): string {
-  const n = name.trim().replace(/\s+/g, ' ')
-  if (!n) return ''
-  if (/जी\s*$/u.test(n)) return n.replace(/\s*जी\s*$/u, ' जी')
-  if (/\bji\s*$/i.test(n)) return n.replace(/\s*ji\s*$/i, ' जी')
-  return `${n} जी`
-}
-
-/** Join names the way cards do: X एवं Y · X, Y एवं Z */
+/** Join names the way cards do: X & Y · X, Y & Z */
 export function joinNames(names: string[]): string {
   const parts = names.map((x) => x.trim()).filter(Boolean)
   if (parts.length === 0) return ''
   if (parts.length === 1) return parts[0]
-  if (parts.length === 2) return `${parts[0]} एवं ${parts[1]}`
-  return `${parts.slice(0, -1).join(', ')} एवं ${parts[parts.length - 1]}`
+  if (parts.length === 2) return `${parts[0]} & ${parts[1]}`
+  return `${parts.slice(0, -1).join(', ')} & ${parts[parts.length - 1]}`
 }
 
-/**
- * Addressee only — no सपरिवार here.
- * सपरिवार belongs in the request line: “आप सपरिवार सादर आमंत्रित हैं”.
- */
+/** Addressee only — the with-family wording lives in the request line. */
 export function formatGuestLine(invite: InvitePayload): string {
-  if (isGroupInvite(invite)) return 'परिवार व मित्रों'
+  if (isGroupInvite(invite)) return 'family & friends'
 
   const elders = (invite.e || []).map((x) => x.trim()).filter(Boolean)
   const guest = invite.n.trim()
@@ -142,17 +130,17 @@ export function formatGuestLine(invite: InvitePayload): string {
       guest && !guestAlreadyListed && invite.s
         ? [...elders, guest]
         : elders
-    return withJi(joinNames(names))
+    return joinNames(names)
   }
 
-  return withJi(guest)
+  return guest
 }
 
-/** The actual सपरिवार / अकेले invite sentence */
+/** The actual with-family / without-family invite sentence */
 export function inviteRequestLine(invite?: InvitePayload): string {
-  if (isGroupInvite(invite)) return 'आप सभी सपरिवार सादर आमंत्रित हैं'
-  if (isSaparivar(invite)) return 'आप सपरिवार सादर आमंत्रित हैं'
-  return 'आप सादर आमंत्रित हैं'
+  if (isGroupInvite(invite)) return 'You are all warmly invited, with your families'
+  if (isSaparivar(invite)) return 'You are warmly invited, with your family'
+  return 'You are warmly invited'
 }
 
 export function formatGuestLineEn(invite: InvitePayload): string {
@@ -164,7 +152,7 @@ export function formatGuestLineEn(invite: InvitePayload): string {
       guest && invite.s && !elders.some((e) => e.toLowerCase() === guest.toLowerCase())
         ? [...elders, guest]
         : elders
-    const line = joinNames(names).replace(/\s*एवं\s*/g, ' & ')
+    const line = joinNames(names)
     return invite.s ? `${line} & family` : line
   }
   if (!invite.s) return guest
@@ -184,18 +172,6 @@ export function formatDaysSummary(d?: InviteDaySet, family?: HostFamily): string
   return '23 January 2027 · Dhruva Resort, Bhopal (Wedding day)'
 }
 
-export function formatDaysSummaryHi(d?: InviteDaySet, family?: HostFamily): string {
-  const meta = daySetMeta(d)
-  const host = family || currentHostFamily()
-  if (meta.id === 'all') {
-    return host === 'bride'
-      ? '20, 22 व 23 जनवरी 2027 · नर्मदापुरम व भोपाल'
-      : '21–23 जनवरी 2027 · भोपाल'
-  }
-  if (meta.id === '22-23') return '22 व 23 जनवरी 2027 · ध्रुवा रिसॉर्ट, भोपाल'
-  return '23 जनवरी 2027 · ध्रुवा रिसॉर्ट, भोपाल (शुभ विवाह)'
-}
-
 /** Per-day schedule block for WhatsApp / preview */
 export function formatDaysSchedule(d?: InviteDaySet, family?: HostFamily): string {
   const host = family || currentHostFamily()
@@ -205,7 +181,7 @@ export function formatDaysSchedule(d?: InviteDaySet, family?: HostFamily): strin
     .map((day) => {
       const venue = site.venues[day.venueKey]
       const events = day.events
-        .map((e) => `${e.nameHi} · ${e.name} · ${e.time}`)
+        .map((e) => `${e.name} · ${e.time}`)
         .join('\n  ')
       return (
         `• ${day.dateShort} · ${day.city}\n` +
@@ -221,8 +197,8 @@ export function encodeInvite(payload: InvitePayload): string {
   const days = normalizeDaySet(payload.d)
   const group = isGroupInvite(payload)
   const compact: InvitePayload = {
-    n: group ? 'समस्त' : payload.n.trim().slice(0, 80),
-    // Groups stay सपरिवार; personal invites use the admin choice (default अकेले)
+    n: group ? '__group__' : payload.n.trim().slice(0, 80),
+    // Groups stay with-family; personal invites use the admin choice
     s: group ? true : Boolean(payload.s),
     d: days,
   }
@@ -253,10 +229,10 @@ export function decodeInviteToken(token: string | null): InvitePayload | null {
       const data = JSON.parse(json) as InvitePayload
       if (!data?.n || typeof data.n !== 'string') return null
       const n = data.n.trim().slice(0, 80)
-      const group = Boolean(data.g) || n === 'समस्त' || n === '__group__'
+      const group = Boolean(data.g) || n === '\u0938\u092e\u0938\u094d\u0924' || n === '__group__'
       return {
         n,
-        // Already-sent tokens have s:true → सपरिवार. Missing/false → अकेले.
+        // Already-sent tokens have s:true → with family. Missing/false → without.
         s: group ? true : data.s === true,
         e: Array.isArray(data.e) ? data.e.map(String).slice(0, 6) : [],
         d: normalizeDaySet(data.d),
@@ -280,14 +256,13 @@ export function whatsappInviteText(invite: InvitePayload, url: string) {
   // Keep short so the link stays above WhatsApp’s “Read more” fold
   const when = formatDaysSummary(invite.d)
 
-  const detailsLine = 'पूरे विवरण हेतु कृपया यहाँ देखें:'
+  const detailsLine = 'For full details, please visit:'
   const from = `From ${hostFamilyConfig().inviteFrom}`
 
   if (isGroupInvite(invite)) {
     return (
-      `॥ श्री गणेशाय नमः ॥\n` +
-      `प्रिय परिवार व मित्रों,\n` +
-      `${inviteRequestLine(invite)}।\n\n` +
+      `Dear family & friends,\n` +
+      `${inviteRequestLine(invite)}.\n\n` +
       `${when}\n\n` +
       `${detailsLine}\n` +
       `${url}\n\n` +
@@ -297,9 +272,8 @@ export function whatsappInviteText(invite: InvitePayload, url: string) {
 
   const line = formatGuestLine(invite)
   return (
-    `॥ श्री गणेशाय नमः ॥\n` +
-    `आदरणीय ${line},\n` +
-    `${inviteRequestLine(invite)}।\n\n` +
+    `Dear ${line},\n` +
+    `${inviteRequestLine(invite)}.\n\n` +
     `${when}\n\n` +
     `${detailsLine}\n` +
     `${url}\n\n` +

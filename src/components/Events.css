@@ -5,7 +5,7 @@
 .events__personal-note {
   text-align: center;
   color: var(--color-heading);
-  font-family: var(--font-hindi);
+  font-family: var(--font-display);
   font-size: var(--fs-meta);
   margin: -1.5rem auto 2rem;
   max-width: 28rem;
@@ -20,7 +20,7 @@
 
 .day-block {
   border: 1px solid var(--color-line);
-  background: linear-gradient(180deg, rgba(255, 251, 244, 0.95), rgba(246, 236, 220, 0.85));
+  background: var(--surface-card-grad);
   padding: clamp(1.4rem, 3.2vw, 2.2rem);
 }
 
@@ -126,7 +126,7 @@
 }
 
 .day-event__hi {
-  font-family: var(--font-hindi);
+  font-family: var(--font-display);
   font-size: var(--fs-title-sm);
   color: var(--color-heading);
 }
