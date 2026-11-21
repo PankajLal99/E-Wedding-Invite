@@ -1,6 +1,3 @@
-import Lotus from './decor/Lotus'
-import './decor/decor.css'
-
 export default function FloralCorners({
   variant = 'default',
 }: {
@@ -9,8 +6,11 @@ export default function FloralCorners({
   const cls = variant === 'compact' ? 'floral-corner floral-corner--compact' : 'floral-corner'
 
   return (
-    <>
-      <Lotus className={`${cls} floral-corner--lotus floral-corner--bl`} />
-    </>
+    <img
+      className={`${cls} floral-corner--lotus floral-corner--bl`}
+      src="/brand/lotus-corner.png"
+      alt=""
+      aria-hidden="true"
+    />
   )
 }

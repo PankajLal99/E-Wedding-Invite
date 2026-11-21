@@ -23,6 +23,7 @@ export default function Hero() {
       <FloralCorners />
 
       <div className="hero__content">
+        <p className="hero__date fade-in">{date.short}</p>
 
         <GuestWelcome />
 
@@ -39,11 +40,7 @@ export default function Hero() {
           <Monogram className="hero__logo" />
         </button>
 
-        <p
-          className="hero__tagline fade-in"
-        >
-          {hero.tagline}
-        </p>
+        <p className="hero__tagline fade-in">{hero.tagline}</p>
 
         <h1 className="hero__names fade-in">
           <span className="hero__name">{names.first}</span>
@@ -51,19 +48,11 @@ export default function Hero() {
           <span className="hero__name">{names.second}</span>
         </h1>
 
-        <p
-          className="hero__closing fade-in"
-        >
-          {hero.closing}
-        </p>
-        <p className="hero__date fade-in">{date.short}</p>
+        <p className="hero__closing fade-in">{hero.closing}</p>
 
         <div className="hero__actions fade-in">
           <a href="#events" className="btn btn-primary">
             View Schedule
-          </a>
-          <a href="#share" className="btn btn-ghost">
-            Share Invite
           </a>
           <a href="#travel" className="btn btn-ghost">
             Travel Info

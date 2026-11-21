@@ -7,33 +7,41 @@
 const groomResidenceMaps = 'https://maps.app.goo.gl/6UJ8oXXEKtmpPcca9'
 const brideResidenceMaps = 'https://maps.app.goo.gl/QDX5FNppwdpBdMwb6'
 const resortMaps = 'https://maps.app.goo.gl/bhRWUMtVq6xUDRfB8'
-const brideToResortRoute = 'https://maps.app.goo.gl/pxf6XmaEqYnsVWWK6'
 
-const resortAddress = 'Dhruva Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030'
+const resortAddress = 'Dhruva Club & Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030'
 
 const venues = {
   residence: {
-    name: 'Residence',
+    name: "Groom's Residence",
+    pinTitle: "Groom's Residence",
     address: 'A 53 D, BDA Colony, Teela Jamalpura, Bhopal 462001',
     shortAddress: 'Teela Jamalpura, Bhopal',
+    lat: 23.277375,
+    lng: 77.393889,
     mapUrl: groomResidenceMaps,
     appleMapsUrl:
       'https://maps.apple.com/?ll=23.277375,77.393889&q=Residence%20%C2%B7%20BDA%20Colony%2C%20Teela%20Jamalpura',
     googleMapsUrl: groomResidenceMaps,
   },
   brideResidence: {
-    name: 'Residence',
+    name: "Bride's Residence",
+    pinTitle: "Bride's Residence",
     address: 'H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001',
     shortAddress: 'Fefartal, Narmadapuram',
+    lat: 22.7339524,
+    lng: 77.7125525,
     mapUrl: brideResidenceMaps,
     appleMapsUrl:
       'https://maps.apple.com/?ll=22.7339524,77.7125525&q=Pink%20Avenue%20Annex%2C%20Narmadapuram',
     googleMapsUrl: brideResidenceMaps,
   },
   resort: {
-    name: 'Dhruva Resort',
+    name: 'Dhruva Club & Resort',
+    pinTitle: 'Dhruva Club & Resort',
     address: 'Indore – Bhopal Road, Khajoori Sadak, Bhopal, Madhya Pradesh 462030',
     shortAddress: 'Khajoori Sadak, Bhopal',
+    lat: 23.24713,
+    lng: 77.244417,
     mapUrl: resortMaps,
     appleMapsUrl:
       'https://maps.apple.com/?ll=23.24713,77.244417&q=Dhruva%20Resort%2C%20Khajoori%20Sadak',
@@ -50,10 +58,15 @@ const resortDays = [
     venueKey: 'resort',
     city: 'Bhopal',
     events: [
-      { name: 'Haldi', time: '12:00 PM' },
       {
-        name: 'Ring Ceremony & Reception',
-        time: '9:00 PM',
+        name: 'Haldi & Reception',
+        time: '12:00 PM',
+        sessions: [
+          { label: 'Haldi', time: '12:00 PM' },
+          { label: 'Reception', time: '9:00 PM' },
+        ],
+        blurb:
+          'Request your presence for a day of vibrant celebrations—from golden morning hues of Haldi to an evening of music, dinner, and joy.',
       },
     ],
   },
@@ -64,9 +77,16 @@ const resortDays = [
     venueKey: 'resort',
     city: 'Bhopal',
     events: [
-      { name: 'Barat', time: '11:00 AM' },
-      { name: 'Lunch', time: '2:00 PM' },
-      { name: 'Shubh Lagn', time: '2:00 PM' },
+      {
+        name: 'Baraat & Wedding',
+        time: '11:00 AM',
+        sessions: [
+          { label: 'Baraat', time: '11:00 AM' },
+          { label: 'Wedding', time: '2:00 PM' },
+        ],
+        blurb:
+          'Request your gracious presence as we dance in celebration with the royal Baraat and witness the couple unite in sacred matrimony.',
+      },
     ],
   },
 ]
@@ -74,44 +94,21 @@ const resortDays = [
 const resortCalendar = [
   {
     day: 22,
-    title: 'Haldi, Ring Ceremony & Reception',
+    title: 'Haldi & Reception',
     start: '20270122T120000',
     end: '20270122T235900',
     location: resortAddress,
-    description: 'Haldi 12:00 PM · Ring Ceremony & Reception 9:00 PM',
+    description: 'Haldi 12:00 PM · Reception 9:00 PM',
   },
   {
     day: 23,
-    title: 'Barat & Wedding',
+    title: 'Baraat & Wedding',
     start: '20270123T110000',
     end: '20270123T200000',
     location: resortAddress,
-    description: 'Barat 11:00 AM · Lunch 2:00 PM · Shubh Lagn 2:00 PM',
+    description: 'Baraat 11:00 AM · Wedding 2:00 PM',
   },
 ]
-
-const bhopalTravel = {
-  airport: {
-    mode: 'Airport',
-    name: 'Raja Bhoj Airport (BHO), Bhopal',
-    link: 'https://www.google.com/maps/search/?api=1&query=Raja+Bhoj+Airport+Bhopal',
-  },
-  bpl: {
-    mode: 'Railway',
-    name: 'Bhopal Junction (BPL)',
-    link: 'https://www.google.com/maps/search/?api=1&query=Bhopal+Junction+Railway+Station',
-  },
-  shrn: {
-    mode: 'Railway',
-    name: 'Sant Hirdaram Nagar (SHRN)',
-    link: 'https://www.google.com/maps/search/?api=1&query=Sant+Hirdaram+Nagar+Railway+Station+Bhopal',
-  },
-  rkmp: {
-    mode: 'Railway',
-    name: 'Rani Kamlapati (RKMP)',
-    link: 'https://www.google.com/maps/search/?api=1&query=Rani+Kamlapati+Railway+Station+Bhopal',
-  },
-}
 
 const sharedFaq = {
   wear: {
@@ -124,7 +121,7 @@ const sharedFaq = {
   },
   lost: {
     q: 'Who do I call if I’m lost?',
-    a: 'Reach out to the family member who invited you. The Google Maps and Apple Maps buttons on this site point straight to each venue.',
+    a: 'Reach out to the family member who invited you. The Travel section has pinned maps for each venue.',
   },
 }
 
@@ -162,25 +159,111 @@ export const weddingConfig = {
 
   story: {
     title: 'Our Story',
-    subtitle: 'A friendship that became a caring bond',
+    subtitle: 'A story meant to bloom',
     paragraphs: [
-      'We met in June 2026, and what started as an easy friendship quickly became our favourite part of every day — long conversations, shared laughter, and a quiet comfort in each other’s company.',
-      'Somewhere between the small moments, friendship turned into care, and care into a bond we didn’t want to let go of. On 12 July 2026, our families came together and blessed us at our Roka.',
-      'Now, in January 2027, we begin forever — and having you with us would mean the world.',
+      'It all started with “Hey Muskan”. Two numbers exchanged by our parents, one connection made on Jeevansathi, and a story neither of us expected.',
+      'We weren’t quite ready for forever, until we started talking and somehow, couldn’t stop. On 1 June 2026 we had our first conversation. On 12 June, Pankaj travelled from Pune to Hyderabad for our first meeting — and that very day, we knew our yes.',
+      'On 12 July 2026 we made it official with our Roka. A little unexpected, a little magical, and now, a lifetime to go.',
     ],
     milestones: [
-      { year: 'June 2026', event: 'First met as friends' },
+      { year: '1 June 2026', event: 'Our first conversation' },
+      { year: '12 June 2026', event: 'First meeting in Hyderabad' },
       { year: '12 July 2026', event: 'Roka ceremony' },
       { year: 'January 2027', event: 'Our wedding' },
+    ],
+  },
+
+  parents: {
+    bride: {
+      who: 'Muskan',
+      childOf: 'Daughter of',
+      names: 'Mrs Kiran & Rajesh Raj',
+      label: 'Parents of the bride',
+    },
+    groom: {
+      who: 'Pankaj',
+      childOf: 'Son of',
+      names: 'Mrs Richa & Nitesh Lal',
+      label: 'Parents of the groom',
+    },
+  },
+
+  /** Shown on Muskan’s site — the hosts named on the family invite */
+  brideFamily: {
+    blessing:
+      'With the blessings of Mrs Lajwanti Raj & Late Prof. Moolchand Raj, you are invited to the wedding of their granddaughter.',
+    blessingPhoto: {
+      src: '/gallery/bride-grandparents.webp',
+      alt: 'Mrs Lajwanti Raj and Late Prof. Moolchand Raj',
+    },
+    hostsTitle: 'Awaiting to welcome you',
+    hosts: [
+      'Mrs Gyanwanti Raj',
+      'Mrs Zarna & Dr Dinesh Raj',
+      'Mrs Mukta & Deepak Raj',
+      'Mrs Simran & Lokesh Ahuja',
+    ],
+    awaitingTitle: 'Joyously awaiting',
+    awaiting: 'Rutvika, Kanishka, Aayush and Dr Amulya Raj',
+    memoryTitle: 'In loving memory',
+    memory: 'Late Dr Ghyanshyam Das Raj & Late Dr Kavita Raj',
+    workTitle: 'Establishment',
+    work: ['Raj Scooters & Auto Parts', 'Raj Traders', 'Kalpnk AI Studio'],
+    address: 'H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001',
+  },
+
+  /** Shown on Pankaj’s site — the hosts named on the family invite */
+  groomFamily: {
+    blessing:
+      'With the blessings of Mrs Usha Lal & Late Mr. J.P Lal, you are invited to the wedding of their grandson.',
+    blessingPhoto: {
+      src: '/gallery/groom-grandparents.webp',
+      alt: 'Mrs Usha Lal and Late Mr. J.P Lal',
+    },
+    hostsTitle: 'Awaiting to welcome you',
+    hosts: [
+      'Mrs. Karishma & Mr. Shubash Lal',
+      'Mrs. Varsha & Mr. Pooran Menghwani',
+      'Mrs. Muskan & Mr. Ajay Lal',
+    ],
+    awaitingTitle: 'Joyously awaiting',
+    awaiting: 'Garima, Uday, Jay, Tanvi',
+    memoryTitle: 'In loving memory',
+    memory: 'Late Shri. Parasram Chabra',
+    workTitle: 'Establishment',
+    work: [
+      'Paresh Traders',
+      'Uday Enterprises',
+      'UD Infra Developers Pvt. Ltd',
+      'Intra Techno Solutions Pvt. Ltd.',
+    ],
+    address: 'A 53 D, BDA Colony, Teela Jamalpura, Bhopal 462001',
+  },
+
+  dressCode: {
+    title: 'Dress code',
+    subtitle: 'A little colour for each celebration',
+    items: [
+      {
+        event: 'Haldi',
+        wear: 'Bright yellows and festive colours',
+      },
+      {
+        event: 'Reception',
+        wear: 'Elegant ethnic or formal wear',
+      },
+      {
+        event: 'Wedding',
+        wear: 'Elegant ethnic or formal wear',
+      },
     ],
   },
 
   venues,
 
   timeline: [
-    { time: '11:00 AM', title: 'Barat', description: 'The groom’s procession arrives' },
-    { time: '2:00 PM', title: 'Lunch', description: 'Celebrate with family and friends' },
-    { time: '2:00 PM', title: 'Shubh Lagn', description: 'The wedding ceremony' },
+    { time: '11:00 AM', title: 'Baraat', description: 'The royal procession arrives' },
+    { time: '2:00 PM', title: 'Wedding', description: 'Sacred matrimony · Shubh Lagn' },
   ],
 
   distanceNote: 'Distances and drive times are approximate and depend on traffic.',
@@ -200,9 +283,10 @@ export const weddingConfig = {
           city: 'Bhopal',
           events: [
             {
-              name: 'Bairana Sahab',
+              name: 'Bairana Sahib',
               time: '10:00 AM',
-              note: 'Followed by lunch',
+              blurb:
+                'Request your gracious presence as we invoke the divine blessings of Jhulelal Sain to mark the beginning of this auspicious union.',
             },
           ],
         },
@@ -211,79 +295,43 @@ export const weddingConfig = {
       calendarEvents: [
         {
           day: 21,
-          title: 'Bairana Sahab & Lunch',
+          title: 'Bairana Sahib',
           start: '20270121T100000',
           end: '20270121T150000',
           location: 'A 53 D, BDA Colony, Teela Jamalpura, Bhopal 462001',
-          description: 'Bairana Sahab 10:00 AM, followed by lunch',
+          description: 'Bairana Sahib 10:00 AM',
         },
         ...resortCalendar,
       ],
       travel: {
         title: 'Travel',
-        note: 'All celebrations are in Bhopal — at the residence on 21 January and Dhruva Resort on 22–23 January.',
+        note: 'All celebrations are in Bhopal — at the residence on 21 January and Dhruva Club & Resort on 22–23 January.',
         departure: null,
-        modes: [
-          {
-            ...bhopalTravel.airport,
-            detail: 'Closest airport for both venues. Cabs and app taxis are available at arrivals.',
-            distances: [
-              { to: 'Residence', value: '~12 km · 25–30 min' },
-              { to: 'Dhruva Resort', value: '~15 km · 25–30 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.bpl,
-            detail: 'Main station in old Bhopal — the closest to the residence.',
-            distances: [
-              { to: 'Residence', value: '~3 km · 10 min' },
-              { to: 'Dhruva Resort', value: '~22 km · 40 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.shrn,
-            detail: 'Bairagarh station on the Indore road side — the closest to Dhruva Resort.',
-            distances: [
-              { to: 'Residence', value: '~9 km · 20 min' },
-              { to: 'Dhruva Resort', value: '~13 km · 20–25 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.rkmp,
-            detail: 'Formerly Habibganj — many express and Vande Bharat trains stop here.',
-            distances: [
-              { to: 'Residence', value: '~10 km · 25 min' },
-              { to: 'Dhruva Resort', value: '~27 km · 45 min' },
-            ],
-          },
-        ],
+        /** Order of pinned maps on the Travel section */
+        pinKeys: ['residence', 'resort'] as const,
       },
       faqTip: {
         label: 'Two venues',
-        text: '21 January is at the residence in Teela Jamalpura. 22 & 23 January are at Dhruva Resort on the Indore – Bhopal Road, about 21 km (40 min) away — please plan your travel accordingly.',
+        text: '21 January is at the residence in Teela Jamalpura. 22 & 23 January are at Dhruva Club & Resort on the Indore – Bhopal Road, about 21 km (40 min) away — please plan your travel accordingly.',
       },
       faqSubtitle: 'Venues, arrival times, and getting around Bhopal',
       faq: [
         {
           q: 'What time should I arrive?',
-          a: 'Please arrive 15–30 minutes early. Bairana Sahab (21 January) starts at 10:00 AM. Haldi (22 January) from 12:00 PM, and the Ring Ceremony & Reception from 9:00 PM. On 23 January, Barat begins at 11:00 AM, with lunch and Shubh Lagn from 2:00 PM.',
+          a: 'Please arrive 15–30 minutes early. Bairana Sahib (21 January) starts at 10:00 AM. On 22 January, Haldi is from 12:00 PM and Reception from 9:00 PM. On 23 January, Baraat begins at 11:00 AM, with the Wedding from 2:00 PM.',
         },
         {
           q: 'Where are the celebrations?',
-          a: '21 January: Residence — A 53 D, BDA Colony, Teela Jamalpura, Bhopal 462001. 22 & 23 January: Dhruva Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030. Map buttons are on every day in the Events section.',
+          a: '21 January: Groom’s Residence — A 53 D, BDA Colony, Teela Jamalpura, Bhopal 462001. 22 & 23 January: Dhruva Club & Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030. Pinned maps are in the Travel section.',
         },
         {
-          q: 'How far is the residence from Dhruva Resort?',
+          q: 'How far is the residence from Dhruva Club & Resort?',
           a: 'About 21 km — roughly 35–45 minutes by car depending on city traffic.',
-        },
-        {
-          q: 'Which station or airport should I choose?',
-          a: 'For the residence, Bhopal Junction is closest (~3 km). For Dhruva Resort, Sant Hirdaram Nagar (~13 km) or Raja Bhoj Airport (~15 km) are the most convenient. Rani Kamlapati also works well for trains that don’t stop at Bhopal Junction.',
         },
         sharedFaq.wear,
         {
           q: 'Is there parking?',
-          a: 'Dhruva Resort has parking for guests. Parking near the residence is limited street parking, so sharing a cab or car is a good idea on 21 January.',
+          a: 'Dhruva Club & Resort has parking for guests. Parking near the residence is limited street parking, so sharing a cab or car is a good idea on 21 January.',
         },
         sharedFaq.kids,
         sharedFaq.lost,
@@ -320,97 +368,51 @@ export const weddingConfig = {
         },
         {
           day: 22,
-          title: 'Departure to Dhruva Resort',
+          title: 'Departure to Dhruva Club & Resort',
           start: '20270122T090000',
           end: '20270122T113000',
           location: 'H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001',
-          description: `Leave the residence at 9:00 AM for Dhruva Resort, Bhopal (~95 km via Bhopal). Route: ${brideToResortRoute}`,
+          description:
+            'Leave the residence at 9:00 AM for Dhruva Club & Resort, Bhopal (~95 km via Bhopal).',
         },
         ...resortCalendar,
       ],
       travel: {
         title: 'Travel',
-        note: '20 January is at the residence in Narmadapuram. 22 & 23 January are at Dhruva Resort, Bhopal.',
+        note: '20 January is at the residence in Narmadapuram. 22 & 23 January are at Dhruva Club & Resort, Bhopal.',
         departure: {
           label: 'Departure · 22 January, 9:00 AM',
-          from: 'Residence, Pink Avenue Annex, Narmadapuram',
-          to: 'Dhruva Resort, Khajoori Sadak, Bhopal',
+          from: 'Bride’s Residence, Pink Avenue Annex, Narmadapuram',
+          to: 'Dhruva Club & Resort, Khajoori Sadak, Bhopal',
           distance: '~95 km · about 2 h 15 min by road',
-          route: 'Narmadapuram → Budhni → Obaidullaganj (NH46) → Bhopal → Indore – Bhopal Road → Dhruva Resort',
-          text: 'We leave the residence together at 9:00 AM on 22 January so everyone reaches Dhruva Resort in time for Haldi at 12:00 PM.',
-          link: brideToResortRoute,
+          route: 'Narmadapuram → Budhni → Obaidullaganj (NH46) → Bhopal → Indore – Bhopal Road → Dhruva Club & Resort',
+          text: 'We leave the residence together at 9:00 AM on 22 January so everyone reaches Dhruva Club & Resort in time for Haldi at 12:00 PM.',
         },
-        modes: [
-          {
-            mode: 'Railway',
-            name: 'Narmadapuram (NMDB)',
-            detail: 'For 20 January. Formerly Hoshangabad — the closest station to the residence.',
-            link: 'https://www.google.com/maps/search/?api=1&query=Narmadapuram+Railway+Station',
-            distances: [
-              { to: 'Residence', value: '~4 km · 10–15 min' },
-              { to: 'Dhruva Resort', value: '~95 km · 2 h 15 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.rkmp,
-            detail: 'For 22–23 January. Formerly Habibganj — on the Narmadapuram side of Bhopal, with many express and Vande Bharat trains.',
-            distances: [
-              { to: 'Residence', value: '~75 km · 1 h 45 min' },
-              { to: 'Dhruva Resort', value: '~27 km · 45 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.airport,
-            detail: 'Closest airport for both venues. Cabs and app taxis are available at arrivals.',
-            distances: [
-              { to: 'Residence', value: '~95 km · 2 h 15 min' },
-              { to: 'Dhruva Resort', value: '~15 km · 25–30 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.shrn,
-            detail: 'For 22–23 January. Bairagarh station on the Indore road side — the closest to Dhruva Resort.',
-            distances: [
-              { to: 'Residence', value: '~90 km · 2 h 10 min' },
-              { to: 'Dhruva Resort', value: '~13 km · 20–25 min' },
-            ],
-          },
-          {
-            ...bhopalTravel.bpl,
-            detail: 'For 22–23 January. Main station in old Bhopal.',
-            distances: [
-              { to: 'Residence', value: '~80 km · 2 h' },
-              { to: 'Dhruva Resort', value: '~22 km · 40 min' },
-            ],
-          },
-        ],
+        /** Order of pinned maps on the Travel section */
+        pinKeys: ['brideResidence', 'resort'] as const,
       },
       faqTip: {
         label: 'Departure · 22 January',
-        text: 'We leave the residence in Narmadapuram at 9:00 AM on 22 January for Dhruva Resort, Bhopal — about 95 km (2 h 15 min) via Obaidullaganj and Bhopal. Haldi begins at 12:00 PM.',
+        text: 'We leave the residence in Narmadapuram at 9:00 AM on 22 January for Dhruva Club & Resort, Bhopal — about 95 km (2 h 15 min) via Obaidullaganj and Bhopal. Haldi begins at 12:00 PM.',
       },
       faqSubtitle: 'Venues, arrival times, and travelling between Narmadapuram and Bhopal',
       faq: [
         {
           q: 'What time should I arrive?',
-          a: 'Please arrive 15–30 minutes early. On 20 January, Mehndi starts at 2:00 PM and Mata Chowki at 7:00 PM at the residence. On 22 January, Haldi is from 12:00 PM and the Ring Ceremony & Reception from 9:00 PM. On 23 January, Barat begins at 11:00 AM, with lunch and Shubh Lagn from 2:00 PM.',
+          a: 'Please arrive 15–30 minutes early. On 20 January, Mehndi starts at 2:00 PM and Mata Chowki at 7:00 PM at the residence. On 22 January, Haldi is from 12:00 PM and Reception from 9:00 PM. On 23 January, Baraat begins at 11:00 AM, with the Wedding from 2:00 PM.',
         },
         {
           q: 'Where are the celebrations?',
-          a: '20 January: Residence — H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001. 22 & 23 January: Dhruva Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030. Map buttons are on every day in the Events section.',
+          a: '20 January: Bride’s Residence — H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001. 22 & 23 January: Dhruva Club & Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030. Pinned maps are in the Travel section.',
         },
         {
           q: 'When do we leave for Bhopal?',
-          a: 'On 22 January at 9:00 AM from the residence in Narmadapuram. The drive to Dhruva Resort is about 95 km (2 h 15 min) via Budhni, Obaidullaganj and Bhopal. The route link is in the Travel section.',
-        },
-        {
-          q: 'Which station or airport should I choose?',
-          a: 'For 20 January, come to Narmadapuram (NMDB), about 4 km from the residence. If you are joining only on 22–23 January, Rani Kamlapati, Sant Hirdaram Nagar or Raja Bhoj Airport in Bhopal are much closer to Dhruva Resort.',
+          a: 'On 22 January at 9:00 AM from the residence in Narmadapuram. The drive to Dhruva Club & Resort is about 95 km (2 h 15 min) via Budhni, Obaidullaganj and Bhopal.',
         },
         sharedFaq.wear,
         {
           q: 'Is there parking?',
-          a: 'Dhruva Resort has parking for guests. Parking near the residence in Narmadapuram is limited, so sharing a car is a good idea on 20 January.',
+          a: 'Dhruva Club & Resort has parking for guests. Parking near the residence in Narmadapuram is limited, so sharing a car is a good idea on 20 January.',
         },
         sharedFaq.kids,
         sharedFaq.lost,
@@ -435,6 +437,116 @@ export const weddingConfig = {
 
   footer: {
     message: 'Join us in celebrating as we begin our forever.',
+  },
+
+  /**
+   * WhatsApp numbers for quick queries, digits with country code.
+   * The schedule-to-self button does not use these.
+   */
+  queryPhone: {
+    bride: '918827428074',
+    groom: '917000977422',
+  },
+
+  /**
+   * Gallery photos under public/gallery/. Grouped by filename section.
+   * Empty sections array hides the gallery.
+   */
+  gallery: {
+    kicker: 'Our journey',
+    title: 'Moments We Cherish',
+    sections: [
+      {
+        id: 'how-it-all-started',
+        title: 'How it all started',
+        subtitle: '1 June 2026 · The first hello',
+        photos: [
+          {
+            src: '/gallery/how-it-all-started-v2.webp',
+            alt: 'The first WhatsApp conversation — “Hey Muskan”',
+            orientation: 'portrait' as const,
+          },
+        ],
+      },
+      {
+        id: '1st-meet',
+        title: '1st meet',
+        subtitle: '12 June 2026 · Hyderabad',
+        photos: [
+          {
+            src: '/gallery/1st-meet.webp',
+            alt: 'Muskan and Pankaj on their first meet',
+            orientation: 'landscape' as const,
+          },
+        ],
+      },
+      {
+        id: 'roka',
+        title: 'Roka',
+        subtitle: '12 July 2026 · Families come together',
+        photos: [
+          {
+            src: '/gallery/roka.webp',
+            alt: 'Muskan and Pankaj at their Roka',
+            orientation: 'portrait' as const,
+          },
+        ],
+      },
+      {
+        id: 'our-story',
+        title: 'Our story',
+        subtitle: 'Moments from our journey',
+        photos: [
+          {
+            src: '/gallery/our-story-1.webp',
+            alt: 'Our story — moment one',
+            orientation: 'landscape' as const,
+          },
+          {
+            src: '/gallery/our-story-2.webp',
+            alt: 'Our story — moment two',
+            orientation: 'landscape' as const,
+          },
+          {
+            src: '/gallery/our-story-3.webp',
+            alt: 'Our story — moment three',
+            orientation: 'portrait' as const,
+          },
+          {
+            src: '/gallery/our-story-4.webp',
+            alt: 'Our story — moment four',
+            orientation: 'landscape' as const,
+          },
+        ],
+      },
+      {
+        id: 'gallery',
+        title: 'Gallery',
+        subtitle: 'More moments we cherish',
+        photos: [
+          {
+            src: '/gallery/gallery-1.webp',
+            alt: 'Gallery moment one',
+            orientation: 'landscape' as const,
+          },
+          {
+            src: '/gallery/gallery-2.webp',
+            alt: 'Gallery moment two',
+            orientation: 'portrait' as const,
+          },
+          {
+            src: '/gallery/gallery-3.webp',
+            alt: 'Gallery moment three',
+            orientation: 'landscape' as const,
+          },
+          {
+            src: '/gallery/gallery-4.webp',
+            alt: 'Gallery moment four',
+            orientation: 'portrait' as const,
+          },
+        ],
+      },
+    ],
   },
 } as const
 

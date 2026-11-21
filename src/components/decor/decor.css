@@ -350,6 +350,38 @@
   }
 }
 
+.petal-burst {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petal-burst__petal {
+  position: fixed;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.3);
+  animation: petalBurst 1.55s cubic-bezier(0.16, 0.72, 0.28, 1) forwards;
+}
+
+@keyframes petalBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35) rotate(0deg);
+  }
+  14% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+      rotate(var(--rot))
+      scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .drift {
     display: none;

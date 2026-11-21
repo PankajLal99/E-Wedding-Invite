@@ -1,9 +1,14 @@
 import { useReveal } from '../hooks/useReveal'
 import { useGuestInvite } from '../hooks/useGuestInvite'
 import { useSite } from '../hooks/useSite'
-import { filterCelebrationDays, normalizeDaySet } from '../utils/invite'
+import { normalizeDaySet } from '../utils/invite'
 import FloralCorners from './FloralCorners'
 import './Travel.css'
+
+function embedSrc(lat: number, lng: number, label: string) {
+  const query = encodeURIComponent(`${label}@${lat},${lng}`)
+  return `https://maps.google.com/maps?q=${query}&z=16&output=embed`
+}
 
 export default function Travel() {
   const ref = useReveal<HTMLElement>()
@@ -11,28 +16,18 @@ export default function Travel() {
   const site = useSite()
   const { travel, venues } = site
   const daySet = normalizeDaySet(invite?.d)
-  const days = filterCelebrationDays(invite?.d, site.family)
 
   const departure = travel.departure
   const showDeparture = Boolean(departure) && daySet === 'all'
 
-  const venueChips = days.reduce<
-    Array<{ key: string; city: string; dates: string[]; venue: (typeof venues)[string] }>
-  >((list, day) => {
-    const venue = venues[day.venueKey]
-    if (!venue) return list
-    const existing = list.find((item) => item.key === day.venueKey)
-    if (existing) existing.dates.push(day.dateShort)
-    else list.push({ key: day.venueKey, city: day.city, dates: [day.dateShort], venue })
-    return list
-  }, [])
-
-  const chipLabel = (dates: string[], city: string) => {
-    if (dates.length === 1) return `${dates[0]} · ${city}`
-    const first = dates[0].split(' ')[0]
-    const last = dates[dates.length - 1]
-    return `${first}–${last} · ${city}`
-  }
+  const pins = travel.pinKeys
+    .map((key) => venues[key])
+    .filter((venue): venue is (typeof venues)[string] => Boolean(venue))
+    .filter((venue) => {
+      if (daySet === 'all') return true
+      // Resort-only invites: show the wedding venue pin
+      return venue === venues.resort
+    })
 
   return (
     <section className="travel" id="travel" ref={ref}>
@@ -53,7 +48,7 @@ export default function Travel() {
           <div className="travel__leave reveal">
             <p className="travel__leave-label">{departure.label}</p>
             <p>{departure.text}</p>
-            <ul className="travel-mode__distances travel__leave-facts">
+            <ul className="travel__leave-facts">
               <li>
                 <span>From</span>
                 <strong>{departure.from}</strong>
@@ -71,69 +66,46 @@ export default function Travel() {
                 <strong>{departure.route}</strong>
               </li>
             </ul>
-            <a
-              href={departure.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="travel-mode__link"
-            >
-              Open route in Google Maps →
-            </a>
           </div>
         )}
 
-        <div className="travel__venues reveal">
-          {venueChips.map((chip) => (
-            <div className="venue-chip" key={chip.key}>
-              <span>{chipLabel(chip.dates, chip.city)}</span>
-              <strong>{chip.venue.name}</strong>
-              <p>{chip.venue.address}</p>
-              <div className="venue-chip__maps">
-                <a
-                  href={chip.venue.googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Google Maps
-                </a>
-                <a
-                  href={chip.venue.appleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apple Maps
-                </a>
+        <div className="travel__pins">
+          {pins.map((venue) => (
+            <article key={venue.pinTitle} className="travel-pin reveal">
+              <div className="travel-pin__copy">
+                <h3 className="travel-pin__title">{venue.pinTitle}</h3>
+                <p className="travel-pin__address">{venue.address}</p>
+                <div className="travel-pin__maps">
+                  <a
+                    href={venue.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="travel-pin__map-btn"
+                  >
+                    Google Maps
+                  </a>
+                  <a
+                    href={venue.appleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="travel-pin__map-btn"
+                  >
+                    Apple Maps
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="travel__modes">
-          {travel.modes.map((item) => (
-            <article key={item.name} className="travel-mode reveal">
-              <p className="travel-mode__label">{item.mode}</p>
-              <h3 className="travel-mode__name">{item.name}</h3>
-              <p className="travel-mode__detail">{item.detail}</p>
-              <ul className="travel-mode__distances">
-                {item.distances.map((d) => (
-                  <li key={d.to}>
-                    <span>{d.to}</span>
-                    <strong>{d.value}</strong>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="travel-mode__link"
-              >
-                Open location →
-              </a>
+              <div className="travel-pin__map">
+                <iframe
+                  title={`Map · ${venue.pinTitle}`}
+                  src={embedSrc(venue.lat, venue.lng, venue.pinTitle)}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
             </article>
           ))}
         </div>
-        <p className="travel__fineprint reveal">{site.distanceNote}</p>
       </div>
     </section>
   )

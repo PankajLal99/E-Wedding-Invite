@@ -3,16 +3,20 @@ import { useSite } from '../hooks/useSite'
 import Monogram from './Monogram'
 import './Navbar.css'
 
-const navLinks = [
-  { label: 'Story', href: '#story' },
-  { label: 'Events', href: '#events' },
-  { label: 'Travel', href: '#travel' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Blessings', href: '#blessings' },
-]
-
 export default function Navbar() {
-  const { names } = useSite()
+  const site = useSite()
+  const { names } = site
+  const navLinks = [
+    { label: 'Events', href: '#events' },
+    { label: 'Family', href: '#family' },
+    { label: 'Story', href: '#story' },
+    ...(site.gallery.sections.some((s) => s.photos.length > 0)
+      ? [{ label: 'Gallery', href: '#gallery' }]
+      : []),
+    { label: 'Travel', href: '#travel' },
+    ...(site.family === 'groom' ? [{ label: 'FAQ', href: '#faq' }] : []),
+    { label: 'Blessings', href: '#blessings' },
+  ]
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 

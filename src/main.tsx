@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
-import Admin from './pages/Admin'
+import AdminBlessings from './pages/AdminBlessings'
 import AdminRsvp from './pages/AdminRsvp'
 import Rsvp from './pages/Rsvp'
 import { features } from './config/features'
@@ -18,7 +18,7 @@ document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.setAttribute('href'
 
 function Root() {
   if (path === '/admin/rsvp') return <AdminRsvp />
-  if (path === '/admin') return <Admin />
+  if (path === '/admin' || path === '/admin/blessings') return <AdminBlessings />
   if (path === '/rsvp') return <Rsvp />
   return <App />
 }

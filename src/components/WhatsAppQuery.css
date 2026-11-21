@@ -1,0 +1,23 @@
+.wa-query {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--color-line);
+  background: var(--surface-card);
+  color: var(--color-heading);
+  backdrop-filter: blur(8px);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wa-query:hover {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+}

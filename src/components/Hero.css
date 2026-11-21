@@ -3,9 +3,9 @@
   min-height: 100svh;
   min-height: 100dvh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: clamp(5rem, 10vh, 6.5rem) var(--space-gutter) clamp(4.5rem, 10vh, 5.5rem);
+  padding: clamp(5.25rem, 11vh, 6.25rem) var(--space-gutter) 2.5rem;
   background: var(--hero-glow);
 }
 
@@ -39,7 +39,7 @@
 }
 
 .hero__logo {
-  width: clamp(12rem, 34vw, 19rem);
+  width: clamp(8.5rem, 28vw, 13rem);
   height: auto;
   display: block;
   margin-inline: auto;
@@ -48,8 +48,10 @@
 }
 
 .hero__tagline {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
+  font-weight: 400;
   font-style: italic;
+  letter-spacing: 0.01em;
   font-size: var(--fs-lead);
   color: var(--color-muted);
   max-width: 26rem;
@@ -80,21 +82,35 @@
 }
 
 .hero__closing {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
+  font-weight: 400;
   font-style: italic;
+  letter-spacing: 0.01em;
   font-size: var(--fs-lead);
   color: var(--color-muted);
   margin-bottom: 0.45rem;
   animation-delay: 0.55s;
 }
 
+.hero__date-card {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 1rem;
+}
+
+.hero__date-card .hero__date {
+  margin-bottom: 0;
+  padding: 0.45rem 0.9rem;
+}
+
 .hero__date {
   font-family: var(--font-display);
-  font-size: var(--fs-title-sm);
-  letter-spacing: 0.12em;
+  font-size: clamp(1.15rem, 0.95rem + 1vw, 1.55rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 2.1rem;
-  animation-delay: 0.65s;
+  margin-bottom: 1rem;
 }
 
 .hero__actions {
@@ -146,7 +162,7 @@
 @media (max-width: 768px), (max-height: 760px) {
   .hero {
     align-items: flex-start;
-    padding-top: clamp(5.5rem, 12vh, 6.5rem);
+    padding-top: 5.25rem;
     padding-bottom: 2rem;
     min-height: auto;
   }
@@ -163,12 +179,11 @@
 
 @media (max-width: 480px) {
   .hero__logo {
-    width: clamp(10rem, 56vw, 14rem);
-    margin-bottom: 1rem;
+    width: clamp(7.5rem, 42vw, 10rem);
   }
 
   .hero__date {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.85rem;
   }
 
   .hero__actions {
@@ -186,24 +201,3 @@
   }
 }
 
-/* Bride theme: monogram sits on a burgundy arch "patch" for contrast on cream */
-[data-side='bride'] .hero__logo-btn {
-  width: fit-content;
-  padding: clamp(1.4rem, 4vw, 2.2rem) clamp(1.1rem, 3vw, 1.8rem) clamp(1rem, 3vw, 1.6rem);
-  border-radius: 999px 999px 1.2rem 1.2rem;
-  border: 1px solid rgba(148, 112, 47, 0.7);
-  outline: 4px solid rgba(250, 243, 230, 0.7);
-  outline-offset: -9px;
-  background: var(--patch-bg);
-  box-shadow: 0 18px 40px rgba(74, 24, 27, 0.3);
-}
-
-[data-side='bride'] .hero__logo {
-  width: clamp(10rem, 28vw, 15rem);
-}
-
-@media (max-width: 480px) {
-  [data-side='bride'] .hero__logo {
-    width: clamp(9rem, 50vw, 12rem);
-  }
-}

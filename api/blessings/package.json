@@ -1,0 +1,12 @@
+{
+  "name": "wedding-blessings-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}

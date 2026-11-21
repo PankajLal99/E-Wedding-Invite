@@ -3,18 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%VITE_FAVICON%" />
+    <link rel="icon" type="image/jpeg" sizes="512x512" href="%VITE_OG_SQUARE%" />
+    <link rel="apple-touch-icon" href="%VITE_OG_SQUARE%" />
+    <link rel="image_src" href="%VITE_SITE_URL%%VITE_OG_IMAGE%" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta http-equiv="Permissions-Policy" content="contacts=(self)" />
     <meta name="theme-color" content="#4a181b" />
+    <meta name="author" content="%VITE_SITE_NAMES%" />
     <meta
       name="description"
-      content="%VITE_SITE_NAMES% invite you to their wedding celebrations — 21–23 January 2027, Bhopal."
+      content="%VITE_SITE_NAMES% invite you to celebrate their wedding — %VITE_SITE_DATES%, Bhopal. Your presence is our greatest blessing."
     />
-    <meta property="og:title" content="%VITE_SITE_NAMES% — Wedding" />
+    <meta itemprop="name" content="%VITE_SITE_NAMES% — Wedding Invitation" />
+    <meta
+      itemprop="description"
+      content="With love, %VITE_SITE_NAMES% invite you to their wedding celebrations. %VITE_SITE_DATES%, Bhopal."
+    />
+    <meta itemprop="image" content="%VITE_SITE_URL%%VITE_OG_IMAGE%" />
+
+    <!-- Open Graph / WhatsApp / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="%VITE_SITE_NAMES% Wedding" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:title" content="%VITE_SITE_NAMES% — Wedding Invitation" />
     <meta
       property="og:description"
-      content="Join us as we begin our forever. 21–23 January 2027, Bhopal."
+      content="With love, %VITE_SITE_NAMES% invite you to their wedding celebrations. %VITE_SITE_DATES%, Bhopal."
     />
+    <meta property="og:image" content="%VITE_SITE_URL%%VITE_OG_IMAGE%" />
+    <meta property="og:image:secure_url" content="%VITE_SITE_URL%%VITE_OG_IMAGE%" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="%VITE_SITE_NAMES% wedding monogram" />
+    <meta property="og:image" content="%VITE_SITE_URL%%VITE_OG_SQUARE%" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+
+    <!-- Twitter / iMessage-style cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="%VITE_SITE_NAMES% — Wedding Invitation" />
+    <meta
+      name="twitter:description"
+      content="With love, %VITE_SITE_NAMES% invite you to their wedding celebrations. %VITE_SITE_DATES%, Bhopal."
+    />
+    <meta name="twitter:image" content="%VITE_SITE_URL%%VITE_OG_IMAGE%" />
+    <meta name="twitter:image:alt" content="%VITE_SITE_NAMES% wedding monogram" />
+
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

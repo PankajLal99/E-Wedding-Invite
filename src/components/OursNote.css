@@ -11,7 +11,9 @@
 }
 
 .ours-note__line {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
   font-size: var(--fs-lead);
   color: var(--color-heading);
   line-height: 1.65;

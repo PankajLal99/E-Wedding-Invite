@@ -7,6 +7,7 @@
     "dev": "vite",
     "dev:bride": "vite --mode bride --port 5174",
     "dev:rsvp": "npm run dev --prefix ../services/rsvp-api",
+    "dev:blessings": "npm run start --prefix api/blessings",
     "build": "tsc -b && npm run build:groom && npm run build:bride",
     "build:groom": "vite build --outDir dist/groom --emptyOutDir",
     "build:bride": "vite build --mode bride --outDir dist/bride --emptyOutDir",

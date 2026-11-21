@@ -1,21 +1,11 @@
 {
-  "name": "Wedding invites",
-  "short_name": "Invites",
+  "name": "Blessings wall",
+  "short_name": "Blessings",
   "start_url": "/admin",
   "scope": "/admin",
   "display": "standalone",
   "background_color": "#f4ead8",
   "theme_color": "#0b4f5c",
-  "share_target": {
-    "action": "/admin",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  },
   "icons": [
     {
       "src": "/favicon-groom.svg",

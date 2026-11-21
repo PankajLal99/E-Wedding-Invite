@@ -9,8 +9,8 @@ export default function MusicToggle() {
       type="button"
       className={`music-toggle ${muted ? 'is-muted' : 'is-playing'}`}
       onClick={() => void toggleMute()}
-      aria-label={muted ? 'Play soft music' : 'Mute music'}
-      title={muted ? 'Play soft music' : 'Mute'}
+      aria-label={muted ? 'Play music' : 'Mute music'}
+      title={muted ? 'Play music' : 'Mute'}
     >
       <span className="music-toggle__icon" aria-hidden="true">
         {muted ? '♪' : '♫'}

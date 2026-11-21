@@ -4,23 +4,50 @@ export function useReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null)
 
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
+    const root = ref.current
+    if (!root) return
 
-    const children = el.querySelectorAll('.reveal')
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const show = (el: Element) => el.classList.add('visible')
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-          }
+          if (entry.isIntersecting) show(entry.target)
         })
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -24px 0px' }
     )
 
-    children.forEach((child) => observer.observe(child))
-    return () => observer.disconnect()
+    const watch = (el: Element) => {
+      if (!el.classList.contains('reveal') || el.classList.contains('visible')) return
+      if (reduced) {
+        show(el)
+        return
+      }
+      observer.observe(el)
+    }
+
+    const watchTree = (el: Element) => {
+      watch(el)
+      el.querySelectorAll('.reveal').forEach(watch)
+    }
+
+    watchTree(root)
+
+    const added = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof Element) watchTree(node)
+        })
+      })
+    })
+    added.observe(root, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+      added.disconnect()
+    }
   }, [])
 
   return ref

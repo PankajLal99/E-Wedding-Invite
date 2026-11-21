@@ -7,6 +7,22 @@
   z-index: 1;
 }
 
+.blessings__offline {
+  margin: 0 auto 1.25rem;
+  max-width: 36rem;
+  text-align: center;
+  color: var(--color-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-meta);
+}
+
+.blessings__offline code {
+  font-style: normal;
+  font-size: 0.9em;
+  color: var(--color-gold);
+}
+
 .blessings__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
@@ -20,8 +36,24 @@
   padding: 1.25rem;
 }
 
+.blessing-card.is-new {
+  animation: blessingIn 0.7s var(--ease);
+}
+
+@keyframes blessingIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .blessing-card__msg {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
+  font-weight: 400;
   font-style: italic;
   color: var(--color-ink);
   margin-bottom: 0.75rem;
@@ -110,8 +142,64 @@
   border-color: var(--color-gold);
 }
 
-.blessings__thanks {
-  color: var(--color-muted);
-  font-family: var(--font-display);
+.blessings__error {
+  color: #e7c2a4;
+  font-family: var(--font-serif);
+  font-weight: 400;
   font-style: italic;
+  animation: blessingIn 0.6s var(--ease);
+}
+
+.blessings__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(20, 4, 5, 0.72);
+  animation: blessingIn 0.35s var(--ease);
+}
+
+.blessings__modal-card {
+  width: min(100%, 22rem);
+  border: 1px solid var(--color-line);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(90, 28, 36, 0.55), transparent 60%),
+    var(--surface-card-grad);
+  padding: clamp(1.4rem, 4vw, 1.85rem);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  animation: blessingIn 0.45s var(--ease);
+}
+
+.blessings__modal-kicker {
+  font-family: var(--font-display);
+  font-size: var(--fs-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.55rem;
+}
+
+.blessings__modal-title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 2rem + 2vw, 3.1rem);
+  line-height: 1;
+  color: var(--color-heading);
+  margin-bottom: 0.7rem;
+}
+
+.blessings__modal-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--color-muted);
+  margin-bottom: 1.25rem;
+}
+
+.blessings__modal-btn {
+  min-width: 8.5rem;
 }

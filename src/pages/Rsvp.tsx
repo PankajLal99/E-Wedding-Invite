@@ -144,7 +144,7 @@ export default function Rsvp() {
                 {(
                   [
                     ['all', `All days (${site.date.range})`],
-                    ['22-23', '22 & 23 January (Dhruva Resort)'],
+                    ['22-23', '22 & 23 January (Dhruva Club & Resort)'],
                     ['23', '23 January only'],
                   ] as const
                 ).map(([value, label]) => (

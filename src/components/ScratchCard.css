@@ -1,0 +1,30 @@
+.scratch {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+  border-radius: 2px;
+  isolation: isolate;
+}
+
+.scratch__face {
+  position: relative;
+  z-index: 0;
+}
+
+.scratch__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  touch-action: none;
+  cursor: crosshair;
+  border-radius: inherit;
+}
+
+.scratch.is-clear .scratch__canvas {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease);
+}

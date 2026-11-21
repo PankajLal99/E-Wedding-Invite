@@ -1,9 +1,10 @@
-import { useReveal } from '../hooks/useReveal'
 import { useGuestInvite } from '../hooks/useGuestInvite'
+import { useReveal } from '../hooks/useReveal'
 import { useSite } from '../hooks/useSite'
 import {
   daySetMeta,
   filterCelebrationDays,
+  formatDaysSchedule,
   formatDaysSummary,
 } from '../utils/invite'
 import FloralCorners from './FloralCorners'
@@ -18,6 +19,9 @@ export default function Events() {
   const meta = daySetMeta(invite?.d)
   const personalized = Boolean(invite)
 
+  const scheduleText = `${site.names.pair}\n\n${formatDaysSchedule(invite?.d, site.family)}`
+  const scheduleHref = `https://wa.me/?text=${encodeURIComponent(scheduleText)}`
+
   return (
     <section className="events" id="events" ref={ref}>
       <FloralCorners />
@@ -28,85 +32,57 @@ export default function Events() {
         <p className="section-kicker reveal">The celebrations</p>
         <h2 className="section-title reveal">{site.eventsTitle}</h2>
         <p className="section-subtitle reveal">
-          {personalized
-            ? formatDaysSummary(invite?.d)
-            : site.eventsSubtitle}
+          {personalized ? formatDaysSummary(invite?.d) : site.eventsSubtitle}
         </p>
         {personalized && meta.id !== 'all' && (
-          <p className="events__personal-note reveal">
-            Showing the days you are invited to
-          </p>
+          <p className="events__personal-note reveal">Showing the days you are invited to</p>
         )}
 
+        <p className="events__send reveal">
+          <a className="btn btn-primary" href={scheduleHref} target="_blank" rel="noopener noreferrer">
+            Send schedule to yourself
+          </a>
+        </p>
+
         <div className="events__days">
-          {celebrationDays.map((day, i) => {
+          {celebrationDays.map((day) => {
             const venue = venues[day.venueKey]
-            const showDayNumber = celebrationDays.length > 1
-            const dayLabel = showDayNumber
-              ? `Day ${String(i + 1).padStart(2, '0')}`
-              : null
-            return (
-              <article
-                key={day.dateShort}
-                className="day-block reveal"
-                style={{ transitionDelay: `${i * 70}ms` }}
-              >
-                <header className="day-block__header">
-                  <div>
-                    {dayLabel && (
-                      <p className="day-block__label">{dayLabel}</p>
+            return day.events.map((event) => {
+              const sessions = event.sessions
+              return (
+                <article key={`${day.dateShort}-${event.name}`} className="day-event reveal">
+                  <div className="day-event__top">
+                    <h3 className="day-event__name">{event.name}</h3>
+                    <p className="day-event__date">{day.date}</p>
+
+                    {sessions && sessions.length > 0 ? (
+                      <p className="day-event__sessions">
+                        {sessions.map((session, index) => (
+                          <span key={`${session.label}-${session.time}`} className="day-event__session">
+                            {index > 0 && <span className="day-event__session-sep" aria-hidden="true">·</span>}
+                            <span className="day-event__session-label">{session.label}</span>
+                            <time className="day-event__session-time">{session.time}</time>
+                          </span>
+                        ))}
+                      </p>
+                    ) : (
+                      <p className="day-event__time">
+                        <time>{event.time}</time>
+                      </p>
                     )}
-                    <h3 className="day-block__date">
-                      <span className="day-block__date-num">
-                        {day.dateShort.split(' ')[0]}
-                      </span>
-                      <span className="day-block__date-script">
-                        {day.dateShort.split(' ').slice(1).join(' ')}
-                      </span>
-                    </h3>
-                    <p className="day-block__fulldate">{day.date}</p>
                   </div>
+
+                  {event.blurb && <p className="day-event__blurb">{event.blurb}</p>}
+
                   {venue && (
-                    <div className="day-block__venue">
+                    <div className="day-event__venue">
                       <strong>{venue.name}</strong>
                       <p>{venue.address}</p>
-                      <div className="day-block__maps">
-                        <a
-                          href={venue.googleMapsUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="day-block__map"
-                        >
-                          Google Maps
-                        </a>
-                        <a
-                          href={venue.appleMapsUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="day-block__map"
-                        >
-                          Apple Maps
-                        </a>
-                      </div>
                     </div>
                   )}
-                </header>
-
-                <ul className="day-block__list">
-                  {day.events.map((event) => (
-                    <li key={event.name} className="day-event">
-                      <div className="day-event__names">
-                        <span className="day-event__en">{event.name}</span>
-                        {event.note && (
-                          <span className="day-event__note">{event.note}</span>
-                        )}
-                      </div>
-                      <time className="day-event__time">{event.time}</time>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            )
+                </article>
+              )
+            })
           })}
         </div>
       </div>

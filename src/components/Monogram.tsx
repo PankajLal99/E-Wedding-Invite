@@ -9,7 +9,7 @@ export default function Monogram({ className, title }: Props) {
   return (
     <img
       className={className}
-      src="/brand/monogram.png"
+      src="/brand/monogram-v2.png"
       alt={title ?? ''}
       aria-hidden={title ? undefined : true}
       width={813}

@@ -3,17 +3,29 @@ import { weddingConfig } from './wedding'
 
 export type SiteVenue = {
   name: string
+  pinTitle: string
   address: string
   shortAddress: string
+  lat: number
+  lng: number
   mapUrl: string
   appleMapsUrl: string
   googleMapsUrl: string
 }
 
+export type SiteEventSession = {
+  label: string
+  time: string
+}
+
 export type SiteEvent = {
   name: string
+  /** Primary time, or first session time for combined cards */
   time: string
+  /** When set, shown as one common timings line (e.g. Haldi · Reception) */
+  sessions?: readonly SiteEventSession[]
   note?: string
+  blurb?: string
 }
 
 export type SiteDay = {
@@ -34,14 +46,6 @@ export type SiteCalendarEvent = {
   description: string
 }
 
-export type SiteTravelMode = {
-  mode: string
-  name: string
-  detail: string
-  link: string
-  distances: readonly { to: string; value: string }[]
-}
-
 export type SiteDeparture = {
   label: string
   from: string
@@ -49,25 +53,25 @@ export type SiteDeparture = {
   distance: string
   route: string
   text: string
-  link: string
+  link?: string
 }
 
 export type SiteTravel = {
   title: string
   note: string
   departure: SiteDeparture | null
-  modes: readonly SiteTravelMode[]
+  pinKeys: readonly string[]
 }
 
 const dayChoices = {
   groom: [
     { id: 'all' as const, title: 'All days', sub: '21, 22 & 23 January' },
-    { id: '22-23' as const, title: '22 & 23 only', sub: 'Dhruva Resort · Haldi to Wedding' },
+    { id: '22-23' as const, title: '22 & 23 only', sub: 'Dhruva Club & Resort · Haldi to Wedding' },
     { id: '23' as const, title: '23 only', sub: 'Wedding day' },
   ],
   bride: [
     { id: 'all' as const, title: 'All days', sub: '20, 22 & 23 January' },
-    { id: '22-23' as const, title: '22 & 23 only', sub: 'Dhruva Resort · Haldi to Wedding' },
+    { id: '22-23' as const, title: '22 & 23 only', sub: 'Dhruva Club & Resort · Haldi to Wedding' },
     { id: '23' as const, title: '23 only', sub: 'Wedding day' },
   ],
 }
@@ -111,6 +115,27 @@ export function getSiteContent(family: HostFamily) {
     footer: weddingConfig.footer,
     credit: weddingConfig.credit,
     blessings: weddingConfig.blessings,
+    parents: orderedParents(family),
+    hostFamily:
+      family === 'bride'
+        ? weddingConfig.brideFamily
+        : weddingConfig.groomFamily,
+    dressCode: weddingConfig.dressCode,
+    gallery: weddingConfig.gallery,
+    queryPhone: weddingConfig.queryPhone[family].replace(/\D/g, ''),
+  }
+}
+
+function orderedParents(family: HostFamily) {
+  const { bride, groom } = weddingConfig.parents
+  const own = family === 'bride' ? bride : groom
+  const other = family === 'bride' ? groom : bride
+  return {
+    own: { ...own, heading: 'Parents' },
+    inLaws: {
+      ...other,
+      heading: family === 'bride' ? 'Groom’s parents' : 'Bride’s parents',
+    },
   }
 }
 

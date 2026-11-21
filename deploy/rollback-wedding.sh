@@ -9,9 +9,9 @@ NGINX_CONF="/etc/nginx/conf.d/docker-apps.conf"
 LATEST_FILE="/srv/apps/backups/wedding-LATEST"
 
 echo "Stopping wedding containers…"
-docker stop wedding-pankaj wedding-muskan 2>/dev/null || true
-docker rm wedding-pankaj wedding-muskan 2>/dev/null || true
-echo "Containers removed."
+docker stop wedding-pankaj wedding-muskan wedding-blessings 2>/dev/null || true
+docker rm wedding-pankaj wedding-muskan wedding-blessings 2>/dev/null || true
+echo "Containers removed. The wedding_blessings database is left in place."
 
 if [ -f "$LATEST_FILE" ]; then
   BACKUP_DIR=$(cat "$LATEST_FILE")
@@ -42,6 +42,6 @@ fi
 
 echo ""
 echo "Rollback done. Leftover Let's Encrypt certs (if any) are harmless:"
-echo "  /etc/letsencrypt/live/pankaj.intratechno.com"
-echo "  /etc/letsencrypt/live/muskan.intratechno.com"
+echo "  /etc/letsencrypt/live/wedding.pankajlal.in"
+echo "  /etc/letsencrypt/live/wedding.muskanraj.in"
 echo "Remove later with: sudo certbot delete --cert-name <name>"

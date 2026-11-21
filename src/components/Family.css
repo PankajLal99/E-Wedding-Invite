@@ -1,0 +1,186 @@
+.family__parents {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.family__card {
+  border: 1px solid var(--color-line);
+  background: var(--surface-card);
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  text-align: center;
+}
+
+.family__label {
+  font-family: var(--font-display);
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.45rem;
+}
+
+.family__card h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.28rem, 1.15rem + 0.45vw, 1.55rem);
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--color-heading);
+  margin-bottom: 0.4rem;
+}
+
+.family__card p:last-child {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-muted);
+  font-size: var(--fs-meta);
+}
+
+.family__hosts {
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  border: 1px solid var(--color-line);
+  background: var(--surface-card);
+  padding: clamp(1.3rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.family__blessing {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.65rem);
+  line-height: 1.45;
+  color: var(--color-heading);
+  margin: 0 auto 1.15rem;
+  max-width: 38rem;
+}
+
+.family__blessing-photo {
+  margin: 0 auto 1.75rem;
+  max-width: min(100%, 30rem);
+}
+
+.family__blessing-photo .photo-frame {
+  margin: 0;
+  padding: 0.45rem;
+  background:
+    linear-gradient(145deg, rgba(250, 231, 196, 0.95), rgba(212, 170, 100, 0.75) 45%, rgba(250, 231, 196, 0.9));
+  box-shadow:
+    0 1px 0 rgba(255, 245, 220, 0.35) inset,
+    0 12px 28px rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(243, 215, 161, 0.55);
+}
+
+.family__blessing-photo .photo-frame__mat {
+  padding: 0.45rem;
+  background: rgba(34, 10, 12, 0.92);
+  border: 1px solid rgba(243, 215, 161, 0.28);
+}
+
+.family__blessing-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+}
+
+.family__group-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.88rem, 0.82rem + 0.25vw, 0.98rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin: 1.35rem 0 0.6rem;
+}
+
+.family__group-title:first-of-type {
+  margin-top: 0.25rem;
+}
+
+.family__names {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  justify-items: center;
+  margin: 0 auto;
+  max-width: 36rem;
+}
+
+.family__names li,
+.family__line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  font-family: var(--font-serif);
+  color: var(--color-muted);
+  font-size: clamp(1.22rem, 1.1rem + 0.4vw, 1.4rem);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.family__names li::before,
+.family__names li::after,
+.family__line::before,
+.family__line::after {
+  content: '';
+  flex: 0 0 auto;
+  width: clamp(1.1rem, 3vw, 1.75rem);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(243, 215, 161, 0.55),
+    transparent
+  );
+  opacity: 0.9;
+}
+
+.family__names li::before,
+.family__line::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(243, 215, 161, 0.2),
+    rgba(243, 215, 161, 0.65)
+  );
+}
+
+.family__names li::after,
+.family__line::after {
+  background: linear-gradient(
+    90deg,
+    rgba(243, 215, 161, 0.65),
+    rgba(243, 215, 161, 0.2),
+    transparent
+  );
+}
+
+.family__line {
+  margin: 0 auto;
+  max-width: 36rem;
+}
+
+.family__address {
+  margin: 1.5rem auto 0;
+  max-width: 34rem;
+  font-family: var(--font-serif);
+  color: var(--color-muted);
+  font-size: var(--fs-meta);
+}
+
+@media (max-width: 700px) {
+  .family__parents {
+    grid-template-columns: 1fr;
+  }
+}

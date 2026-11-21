@@ -35,7 +35,7 @@ export const inviteDayOptions: Array<{
   },
   {
     id: '22-23',
-    label: '22 & 23 January only (Dhruva Resort)',
+    label: '22 & 23 January only (Dhruva Club & Resort)',
     days: [22, 23],
   },
   {
@@ -168,8 +168,8 @@ export function formatDaysSummary(d?: InviteDaySet, family?: HostFamily): string
       ? '20, 22 & 23 January 2027 · Narmadapuram & Bhopal'
       : '21–23 January 2027 · Bhopal'
   }
-  if (meta.id === '22-23') return '22 & 23 January 2027 · Dhruva Resort, Bhopal'
-  return '23 January 2027 · Dhruva Resort, Bhopal (Wedding day)'
+  if (meta.id === '22-23') return '22 & 23 January 2027 · Dhruva Club & Resort, Bhopal'
+  return '23 January 2027 · Dhruva Club & Resort, Bhopal (Wedding day)'
 }
 
 /** Per-day schedule block for WhatsApp / preview */
@@ -181,12 +181,19 @@ export function formatDaysSchedule(d?: InviteDaySet, family?: HostFamily): strin
     .map((day) => {
       const venue = site.venues[day.venueKey]
       const events = day.events
-        .map((e) => `${e.name} · ${e.time}`)
+        .map((e) => {
+          if (e.sessions?.length) {
+            const times = e.sessions.map((s) => `${s.label} ${s.time}`).join(' · ')
+            return `${e.name}\n  ${times}`
+          }
+          return `${e.name} · ${e.time}`
+        })
         .join('\n  ')
       return (
         `• ${day.dateShort} · ${day.city}\n` +
         `  ${events}\n` +
-        `  📍 ${venue.name}, ${venue.shortAddress}`
+        `  Venue: ${venue.name}, ${venue.shortAddress}\n` +
+        `  Map: ${venue.googleMapsUrl}`
       )
     })
     .join('\n\n')

@@ -169,7 +169,7 @@ export default function AdminRsvp() {
       <div className="admin admin--gate">
         <p>RSVP admin is disabled in this build.</p>
         <a className="admin__back" href="/admin">
-          ← Invite admin
+          ← Blessings admin
         </a>
       </div>
     )
@@ -195,7 +195,7 @@ export default function AdminRsvp() {
             Open
           </button>
           <a className="admin__back" href="/admin">
-            ← Invite admin
+            ← Blessings admin
           </a>
         </form>
       </div>
@@ -226,7 +226,7 @@ export default function AdminRsvp() {
             Refresh
           </button>
           <a className="admin__back" href="/admin">
-            ← Invites
+            ← Blessings
           </a>
         </div>
       </header>

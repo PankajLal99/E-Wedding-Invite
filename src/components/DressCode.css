@@ -1,0 +1,36 @@
+.dress__list {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+}
+
+.dress__item {
+  border: 1px solid var(--color-line);
+  background: var(--surface-card);
+  padding: clamp(1.15rem, 3vw, 1.6rem);
+  text-align: center;
+}
+
+.dress__event {
+  font-family: var(--font-display);
+  font-size: var(--fs-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.45rem;
+}
+
+.dress__wear {
+  font-family: var(--font-serif);
+  color: var(--color-muted);
+  font-size: var(--fs-body);
+}
+
+@media (max-width: 700px) {
+  .dress__list {
+    grid-template-columns: 1fr;
+  }
+}
