@@ -73,7 +73,7 @@
   aspect-ratio: 3 / 4.35;
   max-height: min(72vh, 36rem);
   touch-action: pan-y;
-  cursor: grab;
+  cursor: zoom-in;
   user-select: none;
   -webkit-user-select: none;
   transition: aspect-ratio 0.35s var(--ease);

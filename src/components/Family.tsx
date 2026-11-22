@@ -1,10 +1,12 @@
 import { useReveal } from '../hooks/useReveal'
 import { useSite } from '../hooks/useSite'
 import FloralCorners from './FloralCorners'
+import { useLightbox } from './Lightbox'
 import './Family.css'
 
 export default function Family() {
   const ref = useReveal<HTMLElement>()
+  const lightbox = useLightbox()
   const { parents, hostFamily } = useSite()
 
   return (
@@ -36,18 +38,30 @@ export default function Family() {
             <p className="family__blessing">{hostFamily.blessing}</p>
             {hostFamily.blessingPhoto && (
               <figure className="family__blessing-photo">
-                <div className="photo-frame">
-                  <div className="photo-frame__mat">
-                    <img
-                      src={hostFamily.blessingPhoto.src}
-                      alt={hostFamily.blessingPhoto.alt}
-                      loading="lazy"
-                      decoding="async"
-                      width={960}
-                      height={630}
-                    />
+                <button
+                  type="button"
+                  className="family__photo-btn"
+                  aria-label={`Open photo: ${hostFamily.blessingPhoto.alt}`}
+                  onClick={() =>
+                    lightbox.open({
+                      src: hostFamily.blessingPhoto!.src,
+                      alt: hostFamily.blessingPhoto!.alt,
+                    })
+                  }
+                >
+                  <div className="photo-frame">
+                    <div className="photo-frame__mat">
+                      <img
+                        src={hostFamily.blessingPhoto.src}
+                        alt={hostFamily.blessingPhoto.alt}
+                        loading="lazy"
+                        decoding="async"
+                        width={960}
+                        height={630}
+                      />
+                    </div>
                   </div>
-                </div>
+                </button>
               </figure>
             )}
 

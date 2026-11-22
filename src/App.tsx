@@ -15,13 +15,14 @@ import MusicToggle from './components/MusicToggle'
 import WhatsAppQuery from './components/WhatsAppQuery'
 import DriftingPetals from './components/decor/DriftingPetals'
 import Envelope from './components/Envelope'
+import { LightboxProvider } from './components/Lightbox'
 import { useSite } from './hooks/useSite'
 
 export default function App() {
   const { family } = useSite()
 
   return (
-    <>
+    <LightboxProvider>
       <Navbar />
       <main>
         <Hero />
@@ -41,6 +42,6 @@ export default function App() {
       <WhatsAppQuery />
       <MusicToggle />
       <Envelope />
-    </>
+    </LightboxProvider>
   )
 }

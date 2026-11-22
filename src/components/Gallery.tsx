@@ -8,6 +8,7 @@ import {
 import { useReveal } from '../hooks/useReveal'
 import { useSite } from '../hooks/useSite'
 import FloralCorners from './FloralCorners'
+import { useLightbox } from './Lightbox'
 import './Gallery.css'
 
 type DeckPhoto = {
@@ -39,11 +40,13 @@ function PhotoDeck({
   const [active, setActive] = useState(0)
   const [dragX, setDragX] = useState(0)
   const [dragging, setDragging] = useState(false)
+  const lightbox = useLightbox()
   const pointerId = useRef<number | null>(null)
   const startX = useRef(0)
   const startY = useRef(0)
   const axis = useRef<'undecided' | 'x' | 'y'>('undecided')
   const dragXRef = useRef(0)
+  const moved = useRef(false)
   const stageRef = useRef<HTMLDivElement>(null)
   const focused = useRef(false)
 
@@ -86,7 +89,14 @@ function PhotoDeck({
 
   useEffect(() => {
     const stage = stageRef.current
-    if (!stage || single) return
+    if (!stage) return
+
+    const openCurrent = () => {
+      lightbox.open(
+        photos.map((p) => ({ src: p.src, alt: p.alt })),
+        active,
+      )
+    }
 
     const onDown = (event: PointerEvent) => {
       if (event.button !== 0 && event.pointerType === 'mouse') return
@@ -94,6 +104,7 @@ function PhotoDeck({
       startX.current = event.clientX
       startY.current = event.clientY
       axis.current = 'undecided'
+      moved.current = false
       dragXRef.current = 0
       setDragX(0)
       stage.setPointerCapture(event.pointerId)
@@ -103,6 +114,10 @@ function PhotoDeck({
       if (pointerId.current !== event.pointerId) return
       const dx = event.clientX - startX.current
       const dy = event.clientY - startY.current
+
+      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) moved.current = true
+
+      if (single) return
 
       if (axis.current === 'undecided') {
         if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
@@ -119,12 +134,14 @@ function PhotoDeck({
 
     const onUp = (event: PointerEvent) => {
       if (pointerId.current !== event.pointerId) return
-      if (axis.current === 'x') endDrag()
+      const wasSwipe = axis.current === 'x' && !single
+      if (wasSwipe) endDrag()
       else {
         pointerId.current = null
         setDragging(false)
         setDragX(0)
         dragXRef.current = 0
+        if (!moved.current) openCurrent()
       }
       axis.current = 'undecided'
     }
@@ -140,7 +157,7 @@ function PhotoDeck({
       stage.removeEventListener('pointerup', onUp)
       stage.removeEventListener('pointercancel', onUp)
     }
-  }, [endDrag, single])
+  }, [active, endDrag, lightbox, photos, single])
 
   const current = photos[active]
   const orientation = current.orientation
@@ -184,8 +201,8 @@ function PhotoDeck({
           aria-roledescription="photo deck"
           aria-label={
             single
-              ? label
-              : `${label}. Photo ${active + 1} of ${total}. Swipe or use arrows.`
+              ? `${label}. Tap to open and zoom.`
+              : `${label}. Photo ${active + 1} of ${total}. Swipe or use arrows. Tap to open and zoom.`
           }
         >
           {photos.map((photo, index) => {
