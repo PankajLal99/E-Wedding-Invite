@@ -75,6 +75,16 @@ export default function Family() {
             <h3 className="family__group-title">{hostFamily.awaitingTitle}</h3>
             <p className="family__line">{hostFamily.awaiting}</p>
 
+            {'nanihalTitle' in hostFamily &&
+              hostFamily.nanihalTitle &&
+              'nanihal' in hostFamily &&
+              hostFamily.nanihal && (
+                <>
+                  <h3 className="family__group-title">{hostFamily.nanihalTitle}</h3>
+                  <p className="family__line">{hostFamily.nanihal}</p>
+                </>
+              )}
+
             <h3 className="family__group-title">{hostFamily.memoryTitle}</h3>
             <p className="family__line">{hostFamily.memory}</p>
 
