@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "dev:bride": "vite --mode bride --port 5174",
+    "dev:reception": "vite --mode reception --port 5175",
     "dev:rsvp": "npm run dev --prefix ../services/rsvp-api",
     "dev:blessings": "npm run start --prefix api/blessings",
-    "build": "tsc -b && npm run build:groom && npm run build:bride",
+    "build": "tsc -b && npm run build:groom && npm run build:bride && npm run build:reception",
     "build:groom": "vite build --outDir dist/groom --emptyOutDir",
     "build:bride": "vite build --mode bride --outDir dist/bride --emptyOutDir",
+    "build:reception": "vite build --mode reception --outDir dist/groom-reception --emptyOutDir",
     "preview": "vite preview --outDir dist/groom",
-    "preview:bride": "vite preview --mode bride --outDir dist/bride --port 4174"
+    "preview:bride": "vite preview --mode bride --outDir dist/bride --port 4174",
+    "preview:reception": "vite preview --mode reception --outDir dist/groom-reception --port 4175"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -1,9 +1,14 @@
 import { getSiteContent } from '../config/site'
+import {
+  normalizeDaySet,
+  resolveDaySet,
+  type InviteDaySet,
+} from '../config/daySet'
 import { currentHostFamily, hostFamilyConfig } from '../config/sides'
 import type { HostFamily } from '../config/sides'
+import type { SiteCalendarEvent, SiteDay, SiteEvent } from '../config/site'
 
-/** Which celebration days this guest is invited to */
-export type InviteDaySet = 'all' | '22-23' | '23'
+export type { InviteDaySet }
 
 export type InvitePayload = {
   /** Guest / contact name · groups use “__group__” */
@@ -12,7 +17,7 @@ export type InvitePayload = {
   s: boolean
   /** Elders named on the invite (optional), e.g. Mr …, Mrs … */
   e?: string[]
-  /** Days invited — all (groom 21–23, bride 20 + 22–23 January) · 22–23 · 23 only */
+  /** Days invited — all · reception · 22 · 22–23 · 23 only */
   d?: InviteDaySet
   /** Shared / WhatsApp-group invite (no personal name) */
   g?: boolean
@@ -32,6 +37,16 @@ export const inviteDayOptions: Array<{
     id: 'all',
     label: 'All days',
     days: [20, 21, 22, 23],
+  },
+  {
+    id: 'reception',
+    label: '22 January Reception only',
+    days: [22],
+  },
+  {
+    id: '22',
+    label: '22 January only (Haldi & Reception)',
+    days: [22],
   },
   {
     id: '22-23',
@@ -71,10 +86,7 @@ function fromBase64Url(value: string) {
   return new TextDecoder().decode(bytes)
 }
 
-export function normalizeDaySet(value: unknown): InviteDaySet {
-  if (value === '22-23' || value === '23' || value === 'all') return value
-  return 'all'
-}
+export { normalizeDaySet, resolveDaySet }
 
 export function makeGroupInvite(days: InviteDaySet = 'all'): InvitePayload {
   return { n: '__group__', s: true, d: normalizeDaySet(days), g: true }
@@ -86,7 +98,7 @@ export function isSaparivar(invite?: InvitePayload | null): boolean {
 }
 
 export function daySetMeta(d?: InviteDaySet) {
-  const id = normalizeDaySet(d)
+  const id = resolveDaySet(d)
   return inviteDayOptions.find((o) => o.id === id) || inviteDayOptions[0]
 }
 
@@ -94,16 +106,49 @@ export function invitedDayNumbers(d?: InviteDaySet): number[] {
   return daySetMeta(d).days
 }
 
+const receptionEvent: SiteEvent = {
+  name: 'Reception',
+  time: '9:00 PM',
+  blurb:
+    'Request your gracious presence for an evening of music, dinner, and joy as we celebrate with family and friends.',
+}
+
+/** Narrow a celebration day for reception-only invites (drop Haldi). */
+export function narrowDayForDaySet(day: SiteDay, d?: InviteDaySet): SiteDay {
+  if (resolveDaySet(d) !== 'reception' || day.day !== 22) return day
+  return {
+    ...day,
+    events: [receptionEvent],
+  }
+}
+
 export function filterCelebrationDays(d?: InviteDaySet, family?: HostFamily) {
-  const allowed = new Set(invitedDayNumbers(d))
+  const daySet = resolveDaySet(d)
+  const allowed = new Set(invitedDayNumbers(daySet))
   const site = getSiteContent(family || currentHostFamily())
-  return site.celebrationDays.filter((day) => allowed.has(day.day))
+  return site.celebrationDays
+    .filter((day) => allowed.has(day.day))
+    .map((day) => narrowDayForDaySet(day, daySet))
 }
 
 export function filterCalendarEvents(d?: InviteDaySet, family?: HostFamily) {
-  const allowed = new Set(invitedDayNumbers(d))
+  const daySet = resolveDaySet(d)
+  const allowed = new Set(invitedDayNumbers(daySet))
   const site = getSiteContent(family || currentHostFamily())
-  return site.calendarEvents.filter((event) => allowed.has(event.day))
+  const list = site.calendarEvents.filter((event) => allowed.has(event.day))
+  if (daySet !== 'reception') return list
+
+  const pair = site.names.pair
+  const resort = site.venues.resort
+  const receptionCal: SiteCalendarEvent = {
+    day: 22,
+    title: `${pair} — Reception`,
+    start: '20270122T210000',
+    end: '20270122T235900',
+    location: resort.address,
+    description: 'Reception 9:00 PM',
+  }
+  return [receptionCal]
 }
 
 /** Join names the way cards do: X & Y · X, Y & Z */
@@ -167,6 +212,12 @@ export function formatDaysSummary(d?: InviteDaySet, family?: HostFamily): string
     return host === 'bride'
       ? '20, 22 & 23 January 2027 · Narmadapuram & Bhopal'
       : '21–23 January 2027 · Bhopal'
+  }
+  if (meta.id === 'reception') {
+    return '22 January 2027 · Reception · Dhruva Club & Resort, Bhopal'
+  }
+  if (meta.id === '22') {
+    return '22 January 2027 · Haldi & Reception · Dhruva Club & Resort, Bhopal'
   }
   if (meta.id === '22-23') return '22 & 23 January 2027 · Dhruva Club & Resort, Bhopal'
   return '23 January 2027 · Dhruva Club & Resort, Bhopal (Wedding day)'

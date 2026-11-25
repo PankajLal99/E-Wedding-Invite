@@ -1,7 +1,7 @@
 import { useReveal } from '../hooks/useReveal'
 import { useGuestInvite } from '../hooks/useGuestInvite'
 import { useSite } from '../hooks/useSite'
-import { normalizeDaySet } from '../utils/invite'
+import { resolveDaySet } from '../utils/invite'
 import FloralCorners from './FloralCorners'
 import './Travel.css'
 
@@ -15,7 +15,7 @@ export default function Travel() {
   const invite = useGuestInvite()
   const site = useSite()
   const { travel, venues } = site
-  const daySet = normalizeDaySet(invite?.d)
+  const daySet = resolveDaySet(invite?.d)
 
   const departure = travel.departure
   const showDeparture = Boolean(departure) && daySet === 'all'
@@ -25,7 +25,7 @@ export default function Travel() {
     .filter((venue): venue is (typeof venues)[string] => Boolean(venue))
     .filter((venue) => {
       if (daySet === 'all') return true
-      // Resort-only invites: show the wedding venue pin
+      // Resort-only invites (reception / 22 / 22–23 / 23): show the venue pin
       return venue === venues.resort
     })
 

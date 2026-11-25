@@ -18,6 +18,7 @@ export default function Events() {
   const celebrationDays = filterCelebrationDays(invite?.d, site.family)
   const meta = daySetMeta(invite?.d)
   const personalized = Boolean(invite)
+  const lockedSlice = site.daySet !== 'all'
 
   const scheduleText = `${site.names.pair}\n\n${formatDaysSchedule(invite?.d, site.family)}`
   const scheduleHref = `https://wa.me/?text=${encodeURIComponent(scheduleText)}`
@@ -29,12 +30,18 @@ export default function Events() {
         <div className="section-ornament reveal">
           <span>✦</span>
         </div>
-        <p className="section-kicker reveal">The celebrations</p>
+        <p className="section-kicker reveal">
+          {meta.id === 'reception' || site.daySet === 'reception'
+            ? 'The evening'
+            : 'The celebrations'}
+        </p>
         <h2 className="section-title reveal">{site.eventsTitle}</h2>
         <p className="section-subtitle reveal">
-          {personalized ? formatDaysSummary(invite?.d) : site.eventsSubtitle}
+          {personalized || lockedSlice
+            ? formatDaysSummary(invite?.d)
+            : site.eventsSubtitle}
         </p>
-        {personalized && meta.id !== 'all' && (
+        {personalized && meta.id !== 'all' && !lockedSlice && (
           <p className="events__personal-note reveal">Showing the days you are invited to</p>
         )}
 

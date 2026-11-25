@@ -19,7 +19,7 @@ import { LightboxProvider } from './components/Lightbox'
 import { useSite } from './hooks/useSite'
 
 export default function App() {
-  const { family } = useSite()
+  const { family, showTimeline } = useSite()
 
   return (
     <LightboxProvider>
@@ -28,7 +28,7 @@ export default function App() {
         <Hero />
         <Countdown />
         <Events />
-        <Timeline />
+        {showTimeline && <Timeline />}
         <Family />
         <Story />
         <OursNote />

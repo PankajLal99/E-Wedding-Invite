@@ -1,15 +1,17 @@
 /**
- * Two websites, one codebase.
+ * Three websites, one codebase.
  *
- * groom → "Pankaj & Muskan" (Pankaj's family)
+ * groom → "Pankaj & Muskan" (Pankaj's family) — full 21–23 January
  * bride → "Muskan & Pankaj" (Muskan's family)
+ * reception → same groom branding, VITE_DAY_SET=reception — 22 Jan Reception only
  *
  * Which side a deployment shows:
  *   1. ?side=pankaj | ?side=muskan   (handy for local preview)
- *   2. VITE_SIDE from the build mode  (`.env` = groom, `.env.bride` = bride)
+ *   2. VITE_SIDE from the build mode  (`.env` = groom, `.env.bride` = bride,
+ *      `.env.reception` = groom + reception lock)
  *
- * Run locally:  npm run dev  (groom) · npm run dev:bride  (bride)
- * Build both:   npm run build  → dist/groom and dist/bride
+ * Run locally:  npm run dev  · npm run dev:bride  · npm run dev:reception
+ * Build:        npm run build  → dist/groom, dist/bride, dist/groom-reception
  */
 
 export type HostFamily = 'groom' | 'bride'

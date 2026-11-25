@@ -23,8 +23,8 @@ for arg in "$@"; do
   esac
 done
 
-if [ ! -d "$APP_DIR/dist/groom" ] || [ ! -d "$APP_DIR/dist/bride" ]; then
-  echo "ERROR: missing dist/groom or dist/bride under $APP_DIR"
+if [ ! -d "$APP_DIR/dist/groom" ] || [ ! -d "$APP_DIR/dist/bride" ] || [ ! -d "$APP_DIR/dist/groom-reception" ]; then
+  echo "ERROR: missing dist/groom, dist/bride, or dist/groom-reception under $APP_DIR"
   echo "Build on a machine with Node, then sync dist/ here."
   exit 1
 fi
@@ -196,16 +196,18 @@ docker pull "$IMAGE"
 
 GROOM_DOMAIN="wedding.pankajlal.in"
 BRIDE_DOMAIN="wedding.muskanraj.in"
+RECEPTION_DOMAIN="reception.pankajlal.in"
 GROOM_ALIAS="pankaj.intratechno.com"
 BRIDE_ALIAS="muskan.intratechno.com"
 
 run_side "wedding-pankaj" "$GROOM_DOMAIN" "groom" "wedding-pankaj" "$GROOM_ALIAS"
 run_side "wedding-muskan" "$BRIDE_DOMAIN" "bride" "wedding-muskan" "$BRIDE_ALIAS"
+run_side "wedding-reception" "$RECEPTION_DOMAIN" "groom-reception" "wedding-reception"
 
 sleep 2
 
 echo "Traefik smoke (HTTP via :8090)…"
-for host in "$GROOM_DOMAIN" "$BRIDE_DOMAIN" "$GROOM_ALIAS" "$BRIDE_ALIAS"; do
+for host in "$GROOM_DOMAIN" "$BRIDE_DOMAIN" "$RECEPTION_DOMAIN" "$GROOM_ALIAS" "$BRIDE_ALIAS"; do
   code=$(curl -s -o /dev/null -w '%{http_code}' -H "Host: $host" http://127.0.0.1:8090/ || echo fail)
   echo "  $host → $code"
   if [ "$code" != "200" ]; then
@@ -216,7 +218,7 @@ done
 
 # Append HTTP vhosts only if not already present
 if grep -q "server_name $GROOM_DOMAIN" "$NGINX_CONF"; then
-  echo "Nginx already has $GROOM_DOMAIN — skipping append"
+  echo "Nginx already has $GROOM_DOMAIN — skipping full snippet append"
 else
   echo "Appending HTTP server blocks to nginx…"
   {
@@ -224,6 +226,31 @@ else
     echo "# BEGIN wedding-invite-v2 $(date -u +%Y-%m-%dT%H:%MZ)"
     cat "$APP_DIR/deploy/nginx-wedding-http.conf.snippet"
     echo "# END wedding-invite-v2"
+  } | sudo tee -a "$NGINX_CONF" >/dev/null
+fi
+
+# Reception hostname may be added after an earlier deploy that only had wedding + bride
+if ! grep -q "server_name $RECEPTION_DOMAIN" "$NGINX_CONF"; then
+  echo "Appending HTTP server block for $RECEPTION_DOMAIN…"
+  {
+    echo ""
+    echo "# BEGIN wedding-reception $(date -u +%Y-%m-%dT%H:%MZ)"
+    cat <<EOF
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${RECEPTION_DOMAIN};
+
+    location / {
+        proxy_pass http://127.0.0.1:8090;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOF
+    echo "# END wedding-reception"
   } | sudo tee -a "$NGINX_CONF" >/dev/null
 fi
 
@@ -245,7 +272,9 @@ fi
 # Certbot: one domain at a time so a failure doesn't leave a half-broken multi-cert
 EMAIL="${CERTBOT_EMAIL:-admin@intratechnosolutions.com}"
 
-for domain in "$GROOM_DOMAIN" "$BRIDE_DOMAIN" "$GROOM_ALIAS" "$BRIDE_ALIAS"; do
+# pankajlal.in hostnames use Cloudflare SSL at the edge; still issue origin certs if nginx terminates TLS.
+# For reception.pankajlal.in: add DNS in Cloudflare first (see deploy/CLOUDFLARE-reception.md).
+for domain in "$GROOM_DOMAIN" "$BRIDE_DOMAIN" "$RECEPTION_DOMAIN" "$GROOM_ALIAS" "$BRIDE_ALIAS"; do
   if [ -d "/etc/letsencrypt/live/$domain" ]; then
     echo "Cert already exists for $domain — ensuring nginx SSL via certbot --nginx"
   fi
@@ -260,9 +289,11 @@ done
 
 echo ""
 echo "Deploy complete."
-echo "  https://$GROOM_DOMAIN  (groom)"
-echo "  https://$BRIDE_DOMAIN  (bride)"
-echo "  https://$GROOM_ALIAS   (groom alias)"
-echo "  https://$BRIDE_ALIAS   (bride alias)"
+echo "  https://$GROOM_DOMAIN       (groom · full)"
+echo "  https://$RECEPTION_DOMAIN   (groom · Reception only)"
+echo "  https://$BRIDE_DOMAIN       (bride)"
+echo "  https://$GROOM_ALIAS        (groom alias)"
+echo "  https://$BRIDE_ALIAS        (bride alias)"
 echo "Rollback: $APP_DIR/deploy/rollback-wedding.sh"
 echo "Backup:   $BACKUP_DIR"
+echo "Cloudflare DNS for reception: $APP_DIR/deploy/CLOUDFLARE-reception.md"

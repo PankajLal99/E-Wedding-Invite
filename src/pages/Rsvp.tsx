@@ -15,7 +15,9 @@ export default function Rsvp() {
   const [phone, setPhone] = useState('')
   const [attending, setAttending] = useState<Attending>('yes')
   const [days, setDays] = useState<Days>(
-    (invite?.d as Days) || 'all'
+    site.daySet === 'reception'
+      ? 'reception'
+      : (invite?.d as Days) || 'all'
   )
   const [guestCount, setGuestCount] = useState(1)
   const [message, setMessage] = useState('')
@@ -141,12 +143,13 @@ export default function Rsvp() {
             <>
               <fieldset>
                 <legend>Which days?</legend>
-                {(
-                  [
-                    ['all', `All days (${site.date.range})`],
-                    ['22-23', '22 & 23 January (Dhruva Club & Resort)'],
-                    ['23', '23 January only'],
-                  ] as const
+                {(site.daySet === 'reception'
+                  ? ([['reception', '22 January Reception']] as const)
+                  : ([
+                      ['all', `All days (${site.date.range})`],
+                      ['22-23', '22 & 23 January (Dhruva Club & Resort)'],
+                      ['23', '23 January only'],
+                    ] as const)
                 ).map(([value, label]) => (
                   <label key={value} className="rsvp__radio">
                     <input
