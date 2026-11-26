@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { weddingConfig } from '../config/wedding'
+import { useSite } from '../hooks/useSite'
 import './Countdown.css'
 
 interface TimeLeft {
@@ -22,16 +22,15 @@ function getTimeLeft(target: string): TimeLeft {
 }
 
 export default function Countdown() {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() =>
-    getTimeLeft(weddingConfig.date.iso)
-  )
+  const { date } = useSite()
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => getTimeLeft(date.iso))
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(getTimeLeft(weddingConfig.date.iso))
+      setTimeLeft(getTimeLeft(date.iso))
     }, 1000)
     return () => clearInterval(timer)
-  }, [])
+  }, [date.iso])
 
   const units = [
     { label: 'Days', value: timeLeft.days },
@@ -43,10 +42,10 @@ export default function Countdown() {
   return (
     <section className="countdown patch">
       <div className="container">
-        <p className="countdown__label">{weddingConfig.date.foreverLabel}</p>
+        <p className="countdown__label">{date.foreverLabel}</p>
         <p className="countdown__forever">
           <span className="countdown__forever-num">{timeLeft.days}</span>
-          <span className="countdown__forever-text">days to forever</span>
+          <span className="countdown__forever-text">{date.foreverLabel}</span>
         </p>
         <div className="countdown__grid">
           {units.map((unit) => (

@@ -153,16 +153,21 @@
 .blessings__modal {
   position: fixed;
   inset: 0;
-  z-index: 1200;
+  z-index: 1600;
   display: grid;
   place-items: center;
-  padding: 1.25rem;
+  padding: max(1.25rem, env(safe-area-inset-top, 0px))
+    max(1.25rem, env(safe-area-inset-right, 0px))
+    max(5.5rem, calc(1.25rem + env(safe-area-inset-bottom, 0px)))
+    max(1.25rem, env(safe-area-inset-left, 0px));
   background: rgba(20, 4, 5, 0.72);
   animation: blessingIn 0.35s var(--ease);
 }
 
 .blessings__modal-card {
   width: min(100%, 22rem);
+  max-height: min(70vh, 28rem);
+  overflow: auto;
   border: 1px solid var(--color-line);
   background:
     radial-gradient(ellipse at 50% 0%, rgba(90, 28, 36, 0.55), transparent 60%),

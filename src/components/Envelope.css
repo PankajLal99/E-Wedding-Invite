@@ -10,10 +10,35 @@
   padding: 1.5rem;
   background: transparent;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .envelope.is-opening {
   pointer-events: none;
+  cursor: default;
+}
+
+@keyframes envelope-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes envelope-hint-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .envelope__veil {
@@ -54,6 +79,10 @@
   opacity: 0.75;
 }
 
+.envelope.is-sealed .envelope__hint {
+  animation: envelope-hint-pulse 2.2s ease-in-out infinite;
+}
+
 .envelope__scene {
   position: relative;
   z-index: 2;
@@ -82,7 +111,12 @@
   pointer-events: none;
 }
 
-.envelope:not(.is-opening) .envelope__scene:hover {
+.envelope.is-sealed .envelope__scene {
+  animation: envelope-bounce 2.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.envelope.is-sealed .envelope__scene:hover {
+  animation: none;
   transform: translateY(-6px);
 }
 
@@ -253,6 +287,11 @@
   .envelope.is-opening .envelope__scene,
   .envelope.is-opening .envelope__scene::after {
     transition: none;
+  }
+
+  .envelope.is-sealed .envelope__scene,
+  .envelope.is-sealed .envelope__hint {
+    animation: none;
   }
 
   .envelope.is-opening .envelope__veil,

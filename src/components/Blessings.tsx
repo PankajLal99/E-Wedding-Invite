@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useReveal } from '../hooks/useReveal'
 import { weddingConfig } from '../config/wedding'
 import FloralCorners from './FloralCorners'
@@ -251,37 +252,39 @@ export default function Blessings() {
         </form>
       </div>
 
-      {thanksOpen && (
-        <div
-          className="blessings__modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={thanksTitleId}
-          onClick={closeThanks}
-        >
+      {thanksOpen &&
+        createPortal(
           <div
-            className="blessings__modal-card"
-            onClick={(e) => e.stopPropagation()}
+            className="blessings__modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={thanksTitleId}
+            onClick={closeThanks}
           >
-            <p className="blessings__modal-kicker">Received with love</p>
-            <h3 id={thanksTitleId} className="blessings__modal-title">
-              Thank you
-            </h3>
-            <p className="blessings__modal-note">
-              Your blessing has been received. We’ll review it shortly, and it will appear on the
-              wall once approved.
-            </p>
-            <button
-              ref={thanksCloseRef}
-              type="button"
-              className="btn btn-primary blessings__modal-btn"
-              onClick={closeThanks}
+            <div
+              className="blessings__modal-card"
+              onClick={(e) => e.stopPropagation()}
             >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+              <p className="blessings__modal-kicker">Received with love</p>
+              <h3 id={thanksTitleId} className="blessings__modal-title">
+                Thank you
+              </h3>
+              <p className="blessings__modal-note">
+                Your blessing has been received. We’ll review it shortly, and it will appear on the
+                wall once approved.
+              </p>
+              <button
+                ref={thanksCloseRef}
+                type="button"
+                className="btn btn-primary blessings__modal-btn"
+                onClick={closeThanks}
+              >
+                Close
+              </button>
+            </div>
+          </div>,
+          document.body,
+        )}
     </section>
   )
 }

@@ -31,12 +31,19 @@ export default function Envelope() {
 
   return (
     <div
-      className={`envelope ${phase === 'opening' ? 'is-opening' : ''}`}
+      className={`envelope ${phase === 'opening' ? 'is-opening' : 'is-sealed'}`}
       role="dialog"
       aria-modal="true"
       aria-label="Invitation"
+      onClick={open}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          open()
+        }
+      }}
     >
-      <div className="envelope__veil" />
+      <div className="envelope__veil" aria-hidden="true" />
       <p className="envelope__kicker">You are invited</p>
       <button type="button" className="envelope__scene" onClick={open} aria-label="Open the invitation">
         <div className="envelope__letter">
@@ -79,7 +86,7 @@ export default function Envelope() {
           </span>
         </div>
       </button>
-      <p className="envelope__hint">Tap the envelope</p>
+      <p className="envelope__hint">Tap anywhere to open</p>
     </div>
   )
 }

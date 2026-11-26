@@ -232,6 +232,8 @@ export function getSiteContent(family: HostFamily) {
         range: '22 January 2027',
         full: 'Friday, 22 January 2027',
         weddingDay: '22 January',
+        iso: '2027-01-22T21:00:00+05:30',
+        foreverLabel: 'days to the Reception',
       }
     : { ...weddingConfig.date, short: details.dateShort, range: details.dateRange }
 
