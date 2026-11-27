@@ -230,22 +230,20 @@ export function formatDaysSchedule(d?: InviteDaySet, family?: HostFamily): strin
   const days = filterCelebrationDays(d, host)
   return days
     .map((day) => {
-      const venue = site.venues[day.venueKey]
       const events = day.events
         .map((e) => {
-          if (e.sessions?.length) {
-            const times = e.sessions.map((s) => `${s.label} ${s.time}`).join(' · ')
-            return `${e.name}\n  ${times}`
-          }
-          return `${e.name} · ${e.time}`
+          const venue = site.venues[e.venueKey ?? day.venueKey]
+          const when = e.sessions?.length
+            ? e.sessions.map((s) => `${s.label} ${s.time}`).join(' · ')
+            : e.time
+          return (
+            `${e.name} · ${when}\n` +
+            `  Venue: ${venue.name}, ${venue.shortAddress}\n` +
+            `  Map: ${venue.googleMapsUrl}`
+          )
         })
         .join('\n  ')
-      return (
-        `• ${day.dateShort} · ${day.city}\n` +
-        `  ${events}\n` +
-        `  Venue: ${venue.name}, ${venue.shortAddress}\n` +
-        `  Map: ${venue.googleMapsUrl}`
-      )
+      return `• ${day.dateShort} · ${day.city}\n  ${events}`
     })
     .join('\n\n')
 }

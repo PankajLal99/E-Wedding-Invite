@@ -6,6 +6,8 @@
 
 const groomResidenceMaps = 'https://maps.app.goo.gl/6UJ8oXXEKtmpPcca9'
 const brideResidenceMaps = 'https://maps.app.goo.gl/QDX5FNppwdpBdMwb6'
+const mataChowkiMaps =
+  'https://www.google.com/maps/search/?api=1&query=Krishnapuri+Darbar%2C+Near+Railway+Station%2C+Narmadapuram+461001'
 const resortMaps = 'https://maps.app.goo.gl/bhRWUMtVq6xUDRfB8'
 
 const resortAddress = 'Dhruva Club & Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030'
@@ -34,6 +36,18 @@ const venues = {
     appleMapsUrl:
       'https://maps.apple.com/?ll=22.7339524,77.7125525&q=Pink%20Avenue%20Annex%2C%20Narmadapuram',
     googleMapsUrl: brideResidenceMaps,
+  },
+  mataChowki: {
+    name: 'Krishnapuri Darbar',
+    pinTitle: 'Mata Ki Chowki · Krishnapuri Darbar',
+    address: 'Krishnapuri Darbar, Near Railway Station, Narmadapuram 461001',
+    shortAddress: 'Near Railway Station, Narmadapuram',
+    lat: 22.7532,
+    lng: 77.7174,
+    mapUrl: mataChowkiMaps,
+    appleMapsUrl:
+      'https://maps.apple.com/?q=Krishnapuri%20Darbar%2C%20Near%20Railway%20Station%2C%20Narmadapuram%20461001',
+    googleMapsUrl: mataChowkiMaps,
   },
   resort: {
     name: 'Dhruva Club & Resort',
@@ -354,7 +368,11 @@ export const weddingConfig = {
           city: 'Narmadapuram',
           events: [
             { name: 'Mehndi', time: '2:00 PM' },
-            { name: 'Mata Chowki', time: '7:00 PM' },
+            {
+              name: 'Mata Ki Chowki',
+              time: 'Followed by dinner · 7:30 PM',
+              venueKey: 'mataChowki',
+            },
           ],
         },
         ...resortDays,
@@ -362,11 +380,19 @@ export const weddingConfig = {
       calendarEvents: [
         {
           day: 20,
-          title: 'Mehndi & Mata Chowki',
+          title: 'Mehndi',
           start: '20270120T140000',
-          end: '20270120T230000',
+          end: '20270120T180000',
           location: 'H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001',
-          description: 'Mehndi 2:00 PM · Mata Chowki 7:00 PM',
+          description: 'Mehndi 2:00 PM',
+        },
+        {
+          day: 20,
+          title: 'Mata Ki Chowki',
+          start: '20270120T193000',
+          end: '20270120T220000',
+          location: 'Krishnapuri Darbar, Near Railway Station, Narmadapuram 461001',
+          description: 'Followed by dinner 7:30 PM',
         },
         {
           day: 22,
@@ -381,7 +407,7 @@ export const weddingConfig = {
       ],
       travel: {
         title: 'Travel',
-        note: '20 January is at the residence in Narmadapuram. 22 & 23 January are at Dhruva Club & Resort, Bhopal.',
+        note: '20 January: Mehndi at the residence, Mata Ki Chowki at Krishnapuri Darbar. 22 & 23 January are at Dhruva Club & Resort, Bhopal.',
         departure: {
           label: 'Departure · 22 January, 9:00 AM',
           from: 'Bride’s Residence, Pink Avenue Annex, Narmadapuram',
@@ -391,7 +417,7 @@ export const weddingConfig = {
           text: 'We leave the residence together at 9:00 AM on 22 January so everyone reaches Dhruva Club & Resort in time for Haldi at 12:00 PM.',
         },
         /** Order of pinned maps on the Travel section */
-        pinKeys: ['brideResidence', 'resort'] as const,
+        pinKeys: ['brideResidence', 'mataChowki', 'resort'] as const,
       },
       faqTip: {
         label: 'Departure · 22 January',
@@ -401,11 +427,11 @@ export const weddingConfig = {
       faq: [
         {
           q: 'What time should I arrive?',
-          a: 'Please arrive 15–30 minutes early. On 20 January, Mehndi starts at 2:00 PM and Mata Chowki at 7:00 PM at the residence. On 22 January, Haldi is from 12:00 PM and Reception from 9:00 PM. On 23 January, Baraat begins at 11:00 AM, with the Wedding from 2:00 PM.',
+          a: 'Please arrive 15–30 minutes early. On 20 January, Mehndi starts at 2:00 PM at the residence, and Mata Ki Chowki is followed by dinner at 7:30 PM at Krishnapuri Darbar. On 22 January, Haldi is from 12:00 PM and Reception from 9:00 PM. On 23 January, Baraat begins at 11:00 AM, with the Wedding from 2:00 PM.',
         },
         {
           q: 'Where are the celebrations?',
-          a: '20 January: Bride’s Residence — H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001. 22 & 23 January: Dhruva Club & Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030. Pinned maps are in the Travel section.',
+          a: '20 January, Mehndi: Bride’s Residence — H 90, Pink Avenue Annex, Harda Road, Fefartal, Narmadapuram 461001. 20 January, Mata Ki Chowki: Krishnapuri Darbar, Near Railway Station, Narmadapuram 461001. 22 & 23 January: Dhruva Club & Resort, Indore – Bhopal Road, Khajoori Sadak, Bhopal 462030. Pinned maps are in the Travel section.',
         },
         {
           q: 'When do we leave for Bhopal?',
@@ -414,7 +440,7 @@ export const weddingConfig = {
         sharedFaq.wear,
         {
           q: 'Is there parking?',
-          a: 'Dhruva Club & Resort has parking for guests. Parking near the residence in Narmadapuram is limited, so sharing a car is a good idea on 20 January.',
+          a: 'Dhruva Club & Resort has parking for guests. Parking near the residence and Krishnapuri Darbar in Narmadapuram is limited, so sharing a car is a good idea on 20 January.',
         },
         sharedFaq.kids,
         sharedFaq.lost,

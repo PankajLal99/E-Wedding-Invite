@@ -25,6 +25,8 @@ export type SiteEvent = {
   time: string
   /** When set, shown as one common timings line (e.g. Haldi · Reception) */
   sessions?: readonly SiteEventSession[]
+  /** Overrides the day's venue when two events share a date */
+  venueKey?: string
   note?: string
   blurb?: string
 }

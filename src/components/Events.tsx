@@ -53,8 +53,8 @@ export default function Events() {
 
         <div className="events__days">
           {celebrationDays.map((day) => {
-            const venue = venues[day.venueKey]
             return day.events.map((event) => {
+              const venue = venues[event.venueKey ?? day.venueKey]
               const sessions = event.sessions
               return (
                 <article key={`${day.dateShort}-${event.name}`} className="day-event reveal">
